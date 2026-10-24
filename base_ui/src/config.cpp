@@ -211,6 +211,21 @@ void Config::init(std::string config_path, const std::string thumbdir) {
     data["/swap_touch_xy"_json_pointer] = false;
   }
 
+  auto &cam_enabled = data["/camera_enabled"_json_pointer];
+  if (cam_enabled.is_null()) {
+    data["/camera_enabled"_json_pointer] = true;
+  }
+
+  auto &cam_url = data["/camera_url"_json_pointer];
+  if (cam_url.is_null()) {
+    data["/camera_url"_json_pointer] = "http://127.0.0.1:8080/?action=stream";
+  }
+
+  auto &cam_fps = data["/camera_fps"_json_pointer];
+  if (cam_fps.is_null()) {
+    data["/camera_fps"_json_pointer] = 12;
+  }
+
   std::ofstream o(config_path);
   o << std::setw(2) << data << std::endl;
 }
