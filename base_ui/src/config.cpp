@@ -198,6 +198,19 @@ void Config::init(std::string config_path, const std::string thumbdir) {
     data["/invert_z_ke_default_applied"_json_pointer] = true;
   }
 
+  auto &inv_touch_x = data["/invert_touch_x"_json_pointer];
+  if (inv_touch_x.is_null()) {
+    data["/invert_touch_x"_json_pointer] = false;
+  }
+  auto &inv_touch_y = data["/invert_touch_y"_json_pointer];
+  if (inv_touch_y.is_null()) {
+    data["/invert_touch_y"_json_pointer] = false;
+  }
+  auto &swap_touch_xy = data["/swap_touch_xy"_json_pointer];
+  if (swap_touch_xy.is_null()) {
+    data["/swap_touch_xy"_json_pointer] = false;
+  }
+
   std::ofstream o(config_path);
   o << std::setw(2) << data << std::endl;
 }
