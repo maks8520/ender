@@ -1,4 +1,5 @@
 #include "guppyscreen.h"
+#include "lvgl/src/extra/libs/sjpg/lv_sjpg.h"
 
 #include "config.h"
 #ifndef OS_ANDROID
@@ -34,12 +35,37 @@ KWebSocketClient GuppyScreen::ws(NULL);
 std::mutex GuppyScreen::lv_lock;
 
 GuppyScreen::GuppyScreen()
-  : spoolman_panel(ws, lv_lock)
+  : moonraker_client(ws, main_screen, lv_lock)
+  , camera_widget(main_screen, lv_lock)
+  , spoolman_panel(ws, lv_lock)
   , main_panel(ws, lv_lock, spoolman_panel)
   , init_panel(main_panel, main_panel.get_tune_panel().get_bedmesh_panel(), filament_runout_panel, lv_lock)
   , notification_manager(ws, lv_lock)
   , filament_runout_panel(ws, lv_lock, [this]() { return main_panel.is_prompt_visible(); })
 {
+  main_screen_obj = lv_obj_create(NULL);
+  main_screen.create(main_screen_obj);
+  lv_scr_load(main_screen_obj);
+
+  Config *conf = Config::get_instance();
+  std::string cam_url = "http://127.0.0.1:8080/?action=stream";
+  int cam_fps = 12;
+  bool cam_enabled = true;
+
+  auto url_j = conf->get_json("/camera_url");
+  if (!url_j.is_null() && url_j.is_string()) cam_url = url_j.get<std::string>();
+
+  auto fps_j = conf->get_json("/camera_fps");
+  if (!fps_j.is_null() && fps_j.is_number_integer()) cam_fps = fps_j.get<int>();
+
+  auto en_j = conf->get_json("/camera_enabled");
+  if (!en_j.is_null() && en_j.is_boolean()) cam_enabled = en_j.get<bool>();
+
+  camera_widget.init(cam_url, cam_fps, cam_enabled);
+  camera_widget.start();
+
+  moonraker_client.init();
+
   main_panel.create_panel();
 }
 
@@ -137,6 +163,7 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
 
   hal_init(primary_color, secondary_color);
   lv_png_init();
+  lv_split_jpeg_init();
 
   lv_style_init(&style_container);
   lv_style_set_border_width(&style_container, 0);
@@ -174,6 +201,7 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
   lv_disp_set_theme(NULL, &th_new);
 
   ws.register_notify_update(State::get_instance());
+  ws.register_notify_update(&moonraker_client);
 
   GuppyScreen *gs = GuppyScreen::get();
   auto printers = conf->get_json("/printers");
@@ -308,8 +336,14 @@ std::mutex &GuppyScreen::get_lock() {
 void GuppyScreen::connect_ws(const std::string &url) {
   init_panel.set_message(LV_SYMBOL_WARNING " Waiting for printer to initialize...");
   ws.connect(url.c_str(),
-   [this]() { init_panel.connected(ws); },
-   [this]() { init_panel.disconnected(ws); });
+   [this]() {
+     init_panel.connected(ws);
+     moonraker_client.on_connected();
+   },
+   [this]() {
+     init_panel.disconnected(ws);
+     moonraker_client.on_disconnected();
+   });
 }
 
 void GuppyScreen::new_theme_apply_cb(lv_theme_t *th, lv_obj_t *obj) {

@@ -62,20 +62,29 @@ static void (*s_base_read_cb)(lv_indev_drv_t *, lv_indev_data_t *) = NULL;
 static void evdev_read_smoothed(lv_indev_drv_t *drv, lv_indev_data_t *data) {
     s_base_read_cb(drv, data);
 
-    Config *conf = Config::get_instance();
-    auto inv_x = conf->get_json("/invert_touch_x");
-    if (!inv_x.is_null() && inv_x.is_boolean() && inv_x.template get<bool>()) {
-        lv_disp_t * disp = lv_disp_get_default();
-        if (disp) data->point.x = disp->driver->hor_res - 1 - data->point.x;
+    static bool cached = false;
+    static bool inv_x = false;
+    static bool inv_y = false;
+    static bool swap_xy = false;
+
+    if (!cached) {
+      Config *conf = Config::get_instance();
+      auto ix = conf->get_json("/invert_touch_x");
+      if (!ix.is_null() && ix.is_boolean()) inv_x = ix.template get<bool>();
+      auto iy = conf->get_json("/invert_touch_y");
+      if (!iy.is_null() && iy.is_boolean()) inv_y = iy.template get<bool>();
+      auto sxy = conf->get_json("/swap_touch_xy");
+      if (!sxy.is_null() && sxy.is_boolean()) swap_xy = sxy.template get<bool>();
+      cached = true;
     }
-    auto inv_y = conf->get_json("/invert_touch_y");
-    if (!inv_y.is_null() && inv_y.is_boolean() && inv_y.template get<bool>()) {
-        lv_disp_t * disp = lv_disp_get_default();
-        if (disp) data->point.y = disp->driver->ver_res - 1 - data->point.y;
+
+    lv_disp_t * disp = lv_disp_get_default();
+    if (disp) {
+      if (inv_x) data->point.x = disp->driver->hor_res - 1 - data->point.x;
+      if (inv_y) data->point.y = disp->driver->ver_res - 1 - data->point.y;
     }
-    auto swap_xy = conf->get_json("/swap_touch_xy");
-    if (!swap_xy.is_null() && swap_xy.is_boolean() && swap_xy.template get<bool>()) {
-        std::swap(data->point.x, data->point.y);
+    if (swap_xy) {
+      std::swap(data->point.x, data->point.y);
     }
 
     static int32_t sx = 0, sy = 0;

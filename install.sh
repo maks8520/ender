@@ -116,6 +116,9 @@ if [ ! -f "$APP_DIR/guppyconfig.json" ]; then
   "default_printer": "k1",
   "display_rotate": 0,
   "display_sleep_sec": 600,
+  "camera_enabled": true,
+  "camera_fps": 12,
+  "camera_url": "http://127.0.0.1:8080/?action=stream",
   "invert_touch_x": false,
   "invert_touch_y": false,
   "swap_touch_xy": false,
@@ -181,6 +184,16 @@ esac
 EOF
 
 chmod +x /etc/init.d/S99guppyscreen
+
+# Step 4b: Verify MJPEG / Camera streamer dependencies
+printf "${green}Checking camera stream dependencies (mjpg-streamer / libjpeg-turbo)...${white}\n"
+if [ -f /usr/bin/opkg ]; then
+    opkg update >/dev/null 2>&1 || true
+    opkg install libjpeg-turbo ffmpeg >/dev/null 2>&1 || true
+fi
+if [ ! -f /usr/bin/curl ] && [ ! -f /tmp/curl ]; then
+    printf "${yellow}Notice: libcurl/curl utility recommended for camera streaming.${white}\n"
+fi
 
 # Step 5: Check Moonraker service status
 printf "${green}Verifying Moonraker service on port 7125...${white}\n"
