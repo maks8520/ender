@@ -1,0 +1,36 @@
+name: Build GuppyScreen MIPS Binary
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-mips:
+    name: Cross-Compile MIPS (mipsel) Binary
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/coreflake1/guppydev:latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Build MIPS Executable
+        run: |
+          cd base_ui
+          mkdir -p build
+          cd build
+          cmake ..
+          make -j$(nproc)
+
+      - name: Upload guppyscreen MIPS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: guppyscreen-ke-mips
+          path: base_ui/build/guppyscreen
+          if-no-files-found: error
