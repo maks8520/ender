@@ -159,23 +159,23 @@ void NotificationManager::push(const std::string &raw_text, Severity sev) {
 
   // Localize raw Klipper error codes to friendly Russian error descriptions
   if (raw_text.find("ADC out of range") != std::string::npos) {
-    text = "⚠️ Ошибка датчика температуры! Проверьте термистор сопла или стола.";
+    text = LV_SYMBOL_WARNING " Ошибка датчика температуры! Проверьте термистор сопла или стола.";
   } else if (raw_text.find("Heater extruder not heating") != std::string::npos) {
-    text = "⚠️ Ошибка нагрева сопла! Проверьте нагреватель и провода.";
+    text = LV_SYMBOL_WARNING " Ошибка нагрева сопла! Проверьте нагреватель и провода.";
   } else if (raw_text.find("Heater heater_bed not heating") != std::string::npos) {
-    text = "⚠️ Ошибка нагрева стола! Проверьте контакты и провода стола.";
+    text = LV_SYMBOL_WARNING " Ошибка нагрева стола! Проверьте контакты и провода стола.";
   } else if (raw_text.find("Timer too close") != std::string::npos) {
-    text = "⚠️ Сбой синхронизации Klipper (высокая нагрузка ЦП).";
+    text = LV_SYMBOL_WARNING " Сбой синхронизации Klipper (высокая нагрузка ЦП).";
   } else if (raw_text.find("MCU 'mcu' shutdown") != std::string::npos) {
-    text = "⚠️ Аварийная остановка платы управления (MCU).";
+    text = LV_SYMBOL_WARNING " Аварийная остановка платы управления (MCU).";
   } else if (raw_text.find("Must home axis first") != std::string::npos) {
-    text = "⚠️ Необходим поиск нулевых точек осей (Homing).";
+    text = LV_SYMBOL_WARNING " Необходим поиск нулевых точек осей (Homing).";
   }
 
   // Severe Klipper shutdown error modal
   if (sev == ERROR) {
     static const char *err_btns[] = {"Перезагрузить Klipper", "Закрыть", ""};
-    lv_obj_t *mbox = lv_msgbox_create(NULL, "⚠️ Ошибка Klipper", text.c_str(), err_btns, false);
+    lv_obj_t *mbox = lv_msgbox_create(NULL, LV_SYMBOL_WARNING " Ошибка Klipper", text.c_str(), err_btns, false);
     lv_obj_add_event_cb(mbox, [](lv_event_t *ev) {
       lv_obj_t *mbox_obj = lv_event_get_current_target(ev);
       auto *self = static_cast<NotificationManager *>(lv_event_get_user_data(ev));
@@ -227,14 +227,14 @@ void NotificationManager::push(const std::string &raw_text, Severity sev) {
 
   lv_obj_t *ic = lv_label_create(card);
   lv_label_set_text(ic, icon);
-  lv_obj_set_style_text_font(ic, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(ic, &montserrat_cyr_20, 0);
   lv_obj_set_style_text_color(ic, lv_color_white(), 0);
 
   lv_obj_t *lbl = lv_label_create(card);
   lv_obj_set_flex_grow(lbl, 1);
   lv_label_set_long_mode(lbl, LV_LABEL_LONG_WRAP);
   lv_label_set_text(lbl, text.c_str());
-  lv_obj_set_style_text_font(lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(lbl, &montserrat_cyr_16, 0);
   lv_obj_set_style_text_color(lbl, lv_color_white(), 0);
 
   // info auto-dismisses; warning/error stay until tapped (or condition clears)

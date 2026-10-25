@@ -75,7 +75,7 @@ ExcludeObjectPanel::ExcludeObjectPanel(KWebSocketClient &websocket_client, std::
                         LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 
   lv_label_set_text(title_label, "Exclude Object");
-  lv_obj_set_style_text_font(title_label, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(title_label, &montserrat_cyr_16, 0);
 
   lv_label_set_recolor(status_label, true);  // legend colours match the bed map
   lv_label_set_long_mode(status_label, LV_LABEL_LONG_WRAP);
@@ -250,7 +250,7 @@ void ExcludeObjectPanel::redraw() {
     lv_draw_label_dsc_t lbl;
     lv_draw_label_dsc_init(&lbl);
     lbl.color = lv_color_white();
-    lbl.font = &lv_font_montserrat_14;
+    lbl.font = &montserrat_cyr_14;
     lv_canvas_draw_text(canvas, (x0 + x1) / 2 - 6, (y0 + y1) / 2 - 8, 20, &lbl,
                         std::to_string(idx + 1).c_str());
     idx++;

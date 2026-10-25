@@ -5,4 +5,6 @@
   #define OS_ANDROID
 #endif
 
+#include "fonts/montserrat_cyr_all.h"
+
 #endif // __GUPPY_PLATFORM_H__

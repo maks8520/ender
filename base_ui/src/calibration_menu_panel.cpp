@@ -65,7 +65,7 @@ static lv_obj_t *make_row(lv_obj_t *parent, const void *icon, const char *label,
     lv_obj_clear_flag(badge, LV_OBJ_FLAG_CLICKABLE);
     lv_obj_t *num_lbl = lv_label_create(badge);
     lv_label_set_text(num_lbl, number);
-    lv_obj_set_style_text_font(num_lbl, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(num_lbl, &montserrat_cyr_14, 0);
     lv_obj_set_style_text_color(num_lbl, lv_color_white(), 0);
     lv_obj_center(num_lbl);
   }
@@ -76,7 +76,7 @@ static lv_obj_t *make_row(lv_obj_t *parent, const void *icon, const char *label,
   // 2-line label would make just that one row taller than the rest, breaking
   // the row-height consistency (matches macro_item.cpp's own long-name handling).
   lv_label_set_long_mode(lbl, LV_LABEL_LONG_DOT);
-  lv_obj_set_style_text_font(lbl, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(lbl, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_color(lbl, lv_palette_darken(LV_PALETTE_GREY, 1), LV_STATE_DISABLED);
   lv_obj_set_flex_grow(lbl, 1);
 
@@ -91,7 +91,7 @@ static lv_obj_t *make_row(lv_obj_t *parent, const void *icon, const char *label,
   lv_obj_clear_flag(chip, LV_OBJ_FLAG_CLICKABLE);
   lv_obj_t *chev = lv_label_create(chip);
   lv_label_set_text(chev, LV_SYMBOL_RIGHT);
-  lv_obj_set_style_text_font(chev, &lv_font_montserrat_10, 0);
+  lv_obj_set_style_text_font(chev, &montserrat_cyr_14, 0);
   lv_obj_center(chev);
 
   lv_obj_add_event_cb(row, cb, LV_EVENT_CLICKED, user_data);
@@ -101,7 +101,7 @@ static lv_obj_t *make_row(lv_obj_t *parent, const void *icon, const char *label,
 static lv_obj_t *make_section_label(lv_obj_t *parent, const char *text) {
   lv_obj_t *lbl = lv_label_create(parent);
   lv_label_set_text(lbl, text);
-  lv_obj_set_style_text_font(lbl, &lv_font_montserrat_10, 0);
+  lv_obj_set_style_text_font(lbl, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_color(lbl, lv_palette_main(LV_PALETTE_GREY), 0);
   return lbl;
 }
@@ -140,14 +140,14 @@ CalibrationMenuPanel::CalibrationMenuPanel(KWebSocketClient &websocket_client, s
   lv_obj_t *title = lv_label_create(panel_cont);
   lv_obj_set_grid_cell(title, LV_GRID_ALIGN_START, 0, 1, LV_GRID_ALIGN_CENTER, 0, 1);
   lv_label_set_text(title, "Calibration");
-  lv_obj_set_style_text_font(title, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(title, &montserrat_cyr_20, 0);
 
   back_btn = lv_btn_create(panel_cont);
   lv_obj_set_grid_cell(back_btn, LV_GRID_ALIGN_STRETCH, 1, 1, LV_GRID_ALIGN_STRETCH, 0, 1);
   lv_obj_set_style_bg_color(back_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *back_lbl = lv_label_create(back_btn);
   lv_label_set_text(back_lbl, LV_SYMBOL_LEFT);
-  lv_obj_set_style_text_font(back_lbl, &lv_font_montserrat_16, LV_PART_MAIN);
+  lv_obj_set_style_text_font(back_lbl, &montserrat_cyr_16, LV_PART_MAIN);
   lv_obj_center(back_lbl);
   lv_obj_add_event_cb(back_btn, &CalibrationMenuPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -211,7 +211,7 @@ CalibrationMenuPanel::CalibrationMenuPanel(KWebSocketClient &websocket_client, s
   style_nav_btn(ok_btn, 1);
   lv_obj_t *ok_lbl = lv_label_create(ok_btn);
   lv_label_set_text(ok_lbl, LV_SYMBOL_OK);
-  lv_obj_set_style_text_font(ok_lbl, &lv_font_montserrat_20, LV_PART_MAIN);
+  lv_obj_set_style_text_font(ok_lbl, &montserrat_cyr_20, LV_PART_MAIN);
   lv_obj_center(ok_lbl);
   lv_obj_add_event_cb(ok_btn, &CalibrationMenuPanel::_handle_nav, LV_EVENT_CLICKED, this);
 

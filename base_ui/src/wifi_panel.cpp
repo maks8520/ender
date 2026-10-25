@@ -153,7 +153,7 @@ WifiPanel::WifiPanel(std::mutex &l)
   }
   lv_obj_set_style_pad_all(pm_btn, 2, 0);
   lv_label_set_text(pm_label, "Low Latency: OFF");
-  lv_obj_set_style_text_font(pm_label, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(pm_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_decor(pm_label, LV_TEXT_DECOR_UNDERLINE, 0);
   lv_obj_center(pm_label);
 
@@ -161,7 +161,7 @@ WifiPanel::WifiPanel(std::mutex &l)
   lv_label_set_long_mode(pm_hint, LV_LABEL_LONG_WRAP);
   lv_obj_set_style_text_align(pm_hint, LV_TEXT_ALIGN_CENTER, 0);
   lv_label_set_text(pm_hint, "steadier WiFi - no power-save/roam/BT");
-  lv_obj_set_style_text_font(pm_hint, &lv_font_montserrat_10, 0);
+  lv_obj_set_style_text_font(pm_hint, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_color(pm_hint, lv_palette_lighten(LV_PALETTE_GREY, 1), 0);
 
   {
@@ -256,7 +256,7 @@ void WifiPanel::rebuild_wifi_rows() {
   auto make_group_label = [&](const char *text) {
     lv_obj_t *l = lv_label_create(wifi_list_cont);
     lv_label_set_text(l, text);
-    lv_obj_set_style_text_font(l, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(l, &montserrat_cyr_14, 0);
     lv_obj_set_style_text_color(l, lv_palette_lighten(LV_PALETTE_GREY, 1), 0);
     lv_obj_set_style_pad_top(l, 8, 0);
     lv_obj_set_style_pad_bottom(l, 2, 0);

@@ -44,7 +44,7 @@ MacrosPanel::MacrosPanel(KWebSocketClient &c, std::mutex &l, lv_obj_t *parent,
   lv_btnmatrix_set_one_checked(view_toggle, true);
   lv_btnmatrix_set_btn_ctrl(view_toggle, FAVORITES, LV_BTNMATRIX_CTRL_CHECKED);
   lv_obj_set_size(view_toggle, LV_PCT(100), 40);
-  lv_obj_set_style_text_font(view_toggle, &lv_font_montserrat_14, LV_STATE_DEFAULT);
+  lv_obj_set_style_text_font(view_toggle, &montserrat_cyr_14, LV_STATE_DEFAULT);
   // let the two buttons fill the bar (no border, minimal gap), so the touch
   // targets are wide; checked button gets the accent, the rest stays neutral
   lv_obj_set_style_border_width(view_toggle, 0, LV_PART_MAIN);
@@ -82,7 +82,7 @@ MacrosPanel::MacrosPanel(KWebSocketClient &c, std::mutex &l, lv_obj_t *parent,
   lv_obj_add_flag(empty_label, LV_OBJ_FLAG_IGNORE_LAYOUT);
   lv_obj_set_width(empty_label, LV_PCT(90));
   lv_obj_set_style_text_align(empty_label, LV_TEXT_ALIGN_CENTER, 0);
-  lv_obj_set_style_text_font(empty_label, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(empty_label, &montserrat_cyr_16, 0);
   lv_obj_center(empty_label);
   lv_obj_add_flag(empty_label, LV_OBJ_FLAG_HIDDEN);
 
@@ -112,7 +112,7 @@ MacrosPanel::MacrosPanel(KWebSocketClient &c, std::mutex &l, lv_obj_t *parent,
   style_nav_btn(ok_btn);
   lv_obj_t *ok_lbl = lv_label_create(ok_btn);
   lv_label_set_text(ok_lbl, LV_SYMBOL_OK);
-  lv_obj_set_style_text_font(ok_lbl, &lv_font_montserrat_20, LV_PART_MAIN);
+  lv_obj_set_style_text_font(ok_lbl, &montserrat_cyr_20, LV_PART_MAIN);
   lv_obj_center(ok_lbl);
   lv_obj_add_event_cb(ok_btn, &MacrosPanel::_handle_nav, LV_EVENT_CLICKED, this);
 
@@ -123,7 +123,7 @@ MacrosPanel::MacrosPanel(KWebSocketClient &c, std::mutex &l, lv_obj_t *parent,
   lv_obj_add_event_cb(down_btn, &MacrosPanel::_handle_nav, LV_EVENT_CLICKED, this);
 
   lv_obj_add_flag(kb, LV_OBJ_FLAG_HIDDEN);
-  lv_obj_set_style_text_font(kb, &lv_font_montserrat_10, LV_STATE_DEFAULT);
+  lv_obj_set_style_text_font(kb, &montserrat_cyr_14, LV_STATE_DEFAULT);
 }
 
 MacrosPanel::~MacrosPanel()

@@ -536,12 +536,12 @@ void SysInfoPanel::show_reset_options() {
 
     lv_obj_t *lbl = lv_label_create(btn);
     lv_label_set_text(lbl, lbl_text);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(lbl, &montserrat_cyr_14, 0);
     lv_obj_set_width(lbl, LV_PCT(100));
 
     lv_obj_t *desc = lv_label_create(btn);
     lv_label_set_text(desc, desc_text);
-    lv_obj_set_style_text_font(desc, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(desc, &montserrat_cyr_14, 0);
     lv_obj_set_width(desc, LV_PCT(100));
     lv_label_set_long_mode(desc, LV_LABEL_LONG_WRAP);
 

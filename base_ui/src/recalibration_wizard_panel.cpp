@@ -83,7 +83,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
 
   lv_obj_t *title = lv_label_create(intro_cont);
   lv_label_set_text(title, "Recalibration Wizard");
-  lv_obj_set_style_text_font(title, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(title, &montserrat_cyr_20, 0);
 
   lv_obj_t *intro_body = lv_label_create(intro_cont);
   lv_label_set_long_mode(intro_body, LV_LABEL_LONG_WRAP);
@@ -93,14 +93,14 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
     "baseline before printing again.\n\n"
     "You'll do one paper-test Z-offset check, then a fresh bed mesh happens "
     "automatically. Nothing is saved until you review and confirm at the end.");
-  lv_obj_set_style_text_font(intro_body, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(intro_body, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(intro_body, LV_TEXT_ALIGN_CENTER, 0);
 
   start_btn = lv_btn_create(intro_cont);
   lv_obj_set_size(start_btn, 220, 46);
   lv_obj_t *sb_lbl = lv_label_create(start_btn);
   lv_label_set_text(sb_lbl, LV_SYMBOL_OK "  Start");
-  lv_obj_set_style_text_font(sb_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(sb_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(sb_lbl);
   lv_obj_add_event_cb(start_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -128,17 +128,17 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
 
   lv_obj_t *step_lbl = lv_label_create(hdr);
   lv_label_set_text(step_lbl, "Step 1 of 2: Z-Offset");
-  lv_obj_set_style_text_font(step_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(step_lbl, &montserrat_cyr_16, 0);
 
   z_label = lv_label_create(hdr);
   lv_label_set_text(z_label, "Z -");
-  lv_obj_set_style_text_font(z_label, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(z_label, &montserrat_cyr_20, 0);
 
   instr_label = lv_label_create(probe_cont);
   lv_label_set_long_mode(instr_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(instr_label, LV_PCT(100));
   lv_label_set_text(instr_label, "Homing and probing...");
-  lv_obj_set_style_text_font(instr_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(instr_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(instr_label, LV_TEXT_ALIGN_CENTER, 0);
 
   auto make_jog_row = [&](int start_idx) {
@@ -157,7 +157,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
       lv_obj_set_style_bg_color(b, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
       lv_obj_t *lbl = lv_label_create(b);
       lv_label_set_text(lbl, JOG_LABELS[i]);
-      lv_obj_set_style_text_font(lbl, &lv_font_montserrat_16, 0);
+      lv_obj_set_style_text_font(lbl, &montserrat_cyr_16, 0);
       lv_obj_center(lbl);
       lv_obj_add_event_cb(b, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
       jogs[i] = { JOG_LABELS[i], b };
@@ -181,7 +181,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
   lv_obj_set_style_bg_color(abort_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *ab_lbl = lv_label_create(abort_btn);
   lv_label_set_text(ab_lbl, LV_SYMBOL_CLOSE "  Abort");
-  lv_obj_set_style_text_font(ab_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(ab_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(ab_lbl);
   lv_obj_add_event_cb(abort_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -190,7 +190,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
   lv_obj_set_height(accept_btn, 44);
   lv_obj_t *ac_lbl = lv_label_create(accept_btn);
   lv_label_set_text(ac_lbl, LV_SYMBOL_OK "  Accept");
-  lv_obj_set_style_text_font(ac_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(ac_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(ac_lbl);
   lv_obj_add_event_cb(accept_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -201,13 +201,13 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
 
   lv_obj_t *mesh_title = lv_label_create(mesh_cont);
   lv_label_set_text(mesh_title, "Step 2 of 2: Bed Mesh");
-  lv_obj_set_style_text_font(mesh_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(mesh_title, &montserrat_cyr_16, 0);
 
   mesh_status_label = lv_label_create(mesh_cont);
   lv_label_set_long_mode(mesh_status_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(mesh_status_label, LV_PCT(90));
   lv_label_set_text(mesh_status_label, "Mapping bed... this takes about a minute, no input needed.");
-  lv_obj_set_style_text_font(mesh_status_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(mesh_status_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(mesh_status_label, LV_TEXT_ALIGN_CENTER, 0);
 
   lv_obj_t *spinner = lv_spinner_create(mesh_cont, 1000, 60);
@@ -221,21 +221,21 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
 
   lv_obj_t *done_title = lv_label_create(done_cont);
   lv_label_set_text(done_title, LV_SYMBOL_OK "  Ready to review");
-  lv_obj_set_style_text_font(done_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(done_title, &montserrat_cyr_16, 0);
   lv_obj_set_style_text_color(done_title, lv_palette_main(LV_PALETTE_GREEN), 0);
 
   done_summary_label = lv_label_create(done_cont);
   lv_label_set_long_mode(done_summary_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(done_summary_label, LV_PCT(94));
   lv_label_set_text(done_summary_label, "");
-  lv_obj_set_style_text_font(done_summary_label, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(done_summary_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(done_summary_label, LV_TEXT_ALIGN_CENTER, 0);
 
   save_btn = lv_btn_create(done_cont);
   lv_obj_set_size(save_btn, 240, 40);
   lv_obj_t *sv_lbl = lv_label_create(save_btn);
   lv_label_set_text(sv_lbl, LV_SYMBOL_SAVE "  Save & Restart");
-  lv_obj_set_style_text_font(sv_lbl, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(sv_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(sv_lbl);
   lv_obj_add_event_cb(save_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -246,7 +246,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
   lv_label_set_long_mode(sr_lbl, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(sr_lbl, 220);
   lv_label_set_text(sr_lbl, "Refine with Load Sensor (optional)");
-  lv_obj_set_style_text_font(sr_lbl, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(sr_lbl, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(sr_lbl, LV_TEXT_ALIGN_CENTER, 0);
   lv_obj_center(sr_lbl);
   lv_obj_add_event_cb(sensor_refine_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
@@ -256,7 +256,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
   lv_obj_set_style_bg_color(done_back_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *db_lbl = lv_label_create(done_back_btn);
   lv_label_set_text(db_lbl, LV_SYMBOL_LEFT "  Discard");
-  lv_obj_set_style_text_font(db_lbl, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(db_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(db_lbl);
   lv_obj_add_event_cb(done_back_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -267,13 +267,13 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
 
   lv_obj_t *sensor_title = lv_label_create(sensor_cont);
   lv_label_set_text(sensor_title, "Refining with Load Sensor");
-  lv_obj_set_style_text_font(sensor_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(sensor_title, &montserrat_cyr_16, 0);
 
   sensor_status_label = lv_label_create(sensor_cont);
   lv_label_set_long_mode(sensor_status_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(sensor_status_label, LV_PCT(90));
   lv_label_set_text(sensor_status_label, "Homing, wiping, and probing...\nDo not touch the printer.");
-  lv_obj_set_style_text_font(sensor_status_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(sensor_status_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(sensor_status_label, LV_TEXT_ALIGN_CENTER, 0);
 
   lv_obj_t *sensor_spinner = lv_spinner_create(sensor_cont, 1000, 60);
@@ -287,21 +287,21 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
 
   lv_obj_t *choice_title = lv_label_create(sensor_choice_cont);
   lv_label_set_text(choice_title, LV_SYMBOL_WARNING "  Choose a Value to Keep");
-  lv_obj_set_style_text_font(choice_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(choice_title, &montserrat_cyr_16, 0);
   lv_obj_set_style_text_color(choice_title, lv_palette_main(LV_PALETTE_ORANGE), 0);
 
   sensor_choice_label = lv_label_create(sensor_choice_cont);
   lv_label_set_long_mode(sensor_choice_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(sensor_choice_label, LV_PCT(94));
   lv_label_set_text(sensor_choice_label, "");
-  lv_obj_set_style_text_font(sensor_choice_label, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(sensor_choice_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(sensor_choice_label, LV_TEXT_ALIGN_CENTER, 0);
 
   keep_paper_btn = lv_btn_create(sensor_choice_cont);
   lv_obj_set_size(keep_paper_btn, 260, 40);
   lv_obj_t *kp_lbl = lv_label_create(keep_paper_btn);
   lv_label_set_text(kp_lbl, "Keep Paper Value");
-  lv_obj_set_style_text_font(kp_lbl, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(kp_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(kp_lbl);
   lv_obj_add_event_cb(keep_paper_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -309,7 +309,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
   lv_obj_set_size(use_sensor_btn, 260, 42);
   lv_obj_t *us_lbl = lv_label_create(use_sensor_btn);
   lv_label_set_text(us_lbl, "Use Sensor Value");
-  lv_obj_set_style_text_font(us_lbl, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(us_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(us_lbl);
   lv_obj_add_event_cb(use_sensor_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -318,7 +318,7 @@ RecalibrationWizardPanel::RecalibrationWizardPanel(KWebSocketClient &websocket_c
   lv_obj_set_style_bg_color(discard_all_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *da_lbl = lv_label_create(discard_all_btn);
   lv_label_set_text(da_lbl, "Discard Both, Keep Original");
-  lv_obj_set_style_text_font(da_lbl, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(da_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(da_lbl);
   lv_obj_add_event_cb(discard_all_btn, &RecalibrationWizardPanel::_handle_callback, LV_EVENT_CLICKED, this);
 

@@ -71,7 +71,7 @@ MiniPrintStatus::MiniPrintStatus(lv_obj_t *parent,
   // as they count - Montserrat's figures aren't equal-width ('1' is ~95u vs '0' ~171u) -
   // which is accepted; only a monospaced font could remove it, and we keep Montserrat.
   lv_point_t info_w;
-  lv_txt_get_size(&info_w, "ETA  88:88:88", &lv_font_montserrat_16, 0, 0, LV_COORD_MAX, 0);
+  lv_txt_get_size(&info_w, "ETA  88:88:88", &montserrat_cyr_16, 0, 0, LV_COORD_MAX, 0);
   lv_obj_set_size(info_cont, info_w.x, LV_SIZE_CONTENT);
   lv_obj_clear_flag(info_cont, LV_OBJ_FLAG_SCROLLABLE);
   // Make the whole overlay one tap target. A plain container is clickable by default and
@@ -87,8 +87,8 @@ MiniPrintStatus::MiniPrintStatus(lv_obj_t *parent,
   // trailing whitespace and its left edge stays put (no per-second wiggle).
   lv_obj_set_flex_align(info_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER);
 
-  lv_obj_set_style_text_font(time_label, &lv_font_montserrat_16, 0);
-  lv_obj_set_style_text_font(pct_label, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(time_label, &montserrat_cyr_16, 0);
+  lv_obj_set_style_text_font(pct_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_color(pct_label, lv_palette_lighten(LV_PALETTE_GREY, 2), 0);
   render();
 
@@ -110,7 +110,7 @@ MiniPrintStatus::MiniPrintStatus(lv_obj_t *parent,
 
   lv_obj_t *chip_label = lv_label_create(chip);
   lv_label_set_text(chip_label, LV_SYMBOL_PAUSE " Paused");
-  lv_obj_set_style_text_font(chip_label, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(chip_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_color(chip_label, lv_color_white(), 0);
   lv_obj_center(chip_label);
 }

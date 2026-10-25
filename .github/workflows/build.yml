@@ -2,12 +2,13 @@ name: Build GuppyScreen MIPS Binary
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main, phase-* ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-mips:
+  build:
     name: Cross-Compile MIPS (mipsel) Binary
     runs-on: ubuntu-latest
     container:
@@ -34,9 +35,10 @@ jobs:
           cmake ..
           make -j$(nproc)
 
-      - name: Upload guppyscreen MIPS Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: guppyscreen-ke-mips
           path: base_ui/build/guppyscreen
+          retention-days: 30
           if-no-files-found: error

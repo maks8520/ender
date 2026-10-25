@@ -177,7 +177,7 @@ PrintStatusPanel::PrintStatusPanel(KWebSocketClient &websocket_client,
   lv_obj_set_style_pad_row(complete_cont, 12, 0);
 
   complete_title = lv_label_create(complete_cont);
-  lv_obj_set_style_text_font(complete_title, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(complete_title, &montserrat_cyr_20, 0);
   lv_obj_set_style_text_align(complete_title, LV_TEXT_ALIGN_CENTER, 0);
   lv_label_set_text(complete_title, "");
 
@@ -185,7 +185,7 @@ PrintStatusPanel::PrintStatusPanel(KWebSocketClient &websocket_client,
   lv_obj_set_width(complete_file, LV_PCT(80));
   lv_label_set_long_mode(complete_file, LV_LABEL_LONG_DOT);
   lv_obj_set_style_text_align(complete_file, LV_TEXT_ALIGN_CENTER, 0);
-  lv_obj_set_style_text_font(complete_file, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(complete_file, &montserrat_cyr_16, 0);
   lv_label_set_text(complete_file, "");
 
   complete_stats = lv_label_create(complete_cont);

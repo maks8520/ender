@@ -70,7 +70,7 @@ ButtonContainer::ButtonContainer(lv_obj_t *parent,
    * button labels like "Spoolman"/"Cooldown"/"Reload"/"Modified". Use m10 globally
    * so all panels get readable, non-wrapping labels without each having to override. */
   if (lv_disp_get_physical_hor_res(NULL) <= 480) {
-    lv_obj_set_style_text_font(label, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(label, &montserrat_cyr_14, 0);
   }
 
   // lv_obj_align_to(label, btn, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);

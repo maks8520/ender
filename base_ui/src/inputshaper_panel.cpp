@@ -125,11 +125,11 @@ InputShaperPanel::InputShaperPanel(KWebSocketClient &c, std::mutex &l)
   // text output
   lv_obj_set_size(xoutput, LV_PCT(38), LV_PCT(45));
   lv_label_set_text(xoutput, "");
-  lv_obj_set_style_text_font(xoutput, &lv_font_montserrat_10, LV_STATE_DEFAULT);
+  lv_obj_set_style_text_font(xoutput, &montserrat_cyr_14, LV_STATE_DEFAULT);
 
   lv_obj_set_size(youtput, LV_PCT(38), LV_PCT(45));
   lv_label_set_text(youtput, "");
-  lv_obj_set_style_text_font(youtput, &lv_font_montserrat_10, LV_STATE_DEFAULT);
+  lv_obj_set_style_text_font(youtput, &montserrat_cyr_14, LV_STATE_DEFAULT);
 
   // spinners
   lv_obj_add_flag(xspinner, LV_OBJ_FLAG_HIDDEN);

@@ -68,7 +68,7 @@ MacroItem::MacroItem(KWebSocketClient &c,
 
   // run button
   lv_obj_t *run_btn = lv_btn_create(top_cont);
-  lv_obj_set_style_text_font(run_btn, &lv_font_montserrat_10, LV_STATE_DEFAULT);
+  lv_obj_set_style_text_font(run_btn, &montserrat_cyr_14, LV_STATE_DEFAULT);
   lv_obj_set_width(run_btn, 62);
   lv_obj_t *run_btn_label = lv_label_create(run_btn);
   lv_label_set_text(run_btn_label, LV_SYMBOL_PLAY);

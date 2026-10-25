@@ -57,7 +57,7 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
 
   lv_obj_t *title = lv_label_create(intro_cont);
   lv_label_set_text(title, "E-Steps Calibration");
-  lv_obj_set_style_text_font(title, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(title, &montserrat_cyr_20, 0);
 
   lv_obj_t *intro_body = lv_label_create(intro_cont);
   lv_label_set_long_mode(intro_body, LV_LABEL_LONG_WRAP);
@@ -67,14 +67,14 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
     "to. Fixes prints that look uniformly over- or under-extruded.\n\n"
     "You'll need a ruler and a small piece of tape. The hotend heats up first "
     "- this is a direct-drive extruder, so there's no cold test.");
-  lv_obj_set_style_text_font(intro_body, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(intro_body, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(intro_body, LV_TEXT_ALIGN_CENTER, 0);
 
   start_btn = lv_btn_create(intro_cont);
   lv_obj_set_size(start_btn, 220, 46);
   lv_obj_t *sb_lbl = lv_label_create(start_btn);
   lv_label_set_text(sb_lbl, LV_SYMBOL_OK "  Start");
-  lv_obj_set_style_text_font(sb_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(sb_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(sb_lbl);
   lv_obj_add_event_cb(start_btn, &EstepsCalibrationPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -92,13 +92,13 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
 
   lv_obj_t *heating_title = lv_label_create(heating_cont);
   lv_label_set_text(heating_title, "Heating");
-  lv_obj_set_style_text_font(heating_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(heating_title, &montserrat_cyr_16, 0);
 
   heating_status_label = lv_label_create(heating_cont);
   lv_label_set_long_mode(heating_status_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(heating_status_label, LV_PCT(90));
   lv_label_set_text(heating_status_label, "Heating...");
-  lv_obj_set_style_text_font(heating_status_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(heating_status_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(heating_status_label, LV_TEXT_ALIGN_CENTER, 0);
 
   lv_obj_t *heating_spinner = lv_spinner_create(heating_cont, 1000, 60);
@@ -119,13 +119,13 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
 
   lv_obj_t *mark_title = lv_label_create(mark_cont);
   lv_label_set_text(mark_title, "Mark the Filament");
-  lv_obj_set_style_text_font(mark_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(mark_title, &montserrat_cyr_16, 0);
 
   mark_instr_label = lv_label_create(mark_cont);
   lv_label_set_long_mode(mark_instr_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(mark_instr_label, LV_PCT(94));
   lv_label_set_text(mark_instr_label, "");
-  lv_obj_set_style_text_font(mark_instr_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(mark_instr_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(mark_instr_label, LV_TEXT_ALIGN_CENTER, 0);
 
   lv_obj_t *mark_act = lv_obj_create(mark_cont);
@@ -160,13 +160,13 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
 
   lv_obj_t *extruding_title = lv_label_create(extruding_cont);
   lv_label_set_text(extruding_title, "Extruding");
-  lv_obj_set_style_text_font(extruding_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(extruding_title, &montserrat_cyr_16, 0);
 
   extruding_status_label = lv_label_create(extruding_cont);
   lv_label_set_long_mode(extruding_status_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(extruding_status_label, LV_PCT(90));
   lv_label_set_text(extruding_status_label, "Extruding... please wait, do not touch the printer.");
-  lv_obj_set_style_text_font(extruding_status_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(extruding_status_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(extruding_status_label, LV_TEXT_ALIGN_CENTER, 0);
 
   lv_obj_t *extruding_spinner = lv_spinner_create(extruding_cont, 1000, 60);
@@ -187,13 +187,13 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
 
   lv_obj_t *measure_title = lv_label_create(measure_cont);
   lv_label_set_text(measure_title, "Enter the Measurement");
-  lv_obj_set_style_text_font(measure_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(measure_title, &montserrat_cyr_16, 0);
 
   measure_instr_label = lv_label_create(measure_cont);
   lv_label_set_long_mode(measure_instr_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(measure_instr_label, LV_PCT(94));
   lv_label_set_text(measure_instr_label, "");
-  lv_obj_set_style_text_font(measure_instr_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(measure_instr_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(measure_instr_label, LV_TEXT_ALIGN_CENTER, 0);
 
   measure_ta = lv_textarea_create(measure_cont);
@@ -251,21 +251,21 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
 
   lv_obj_t *result_title = lv_label_create(result_cont);
   lv_label_set_text(result_title, LV_SYMBOL_OK "  Result");
-  lv_obj_set_style_text_font(result_title, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(result_title, &montserrat_cyr_16, 0);
   lv_obj_set_style_text_color(result_title, lv_palette_main(LV_PALETTE_GREEN), 0);
 
   result_label = lv_label_create(result_cont);
   lv_label_set_long_mode(result_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(result_label, LV_PCT(94));
   lv_label_set_text(result_label, "");
-  lv_obj_set_style_text_font(result_label, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(result_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(result_label, LV_TEXT_ALIGN_CENTER, 0);
 
   verify_again_btn = lv_btn_create(result_cont);
   lv_obj_set_size(verify_again_btn, 240, 40);
   lv_obj_t *va_lbl = lv_label_create(verify_again_btn);
   lv_label_set_text(va_lbl, LV_SYMBOL_REFRESH "  Verify Again");
-  lv_obj_set_style_text_font(va_lbl, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(va_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(va_lbl);
   lv_obj_add_event_cb(verify_again_btn, &EstepsCalibrationPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -274,7 +274,7 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
   lv_obj_set_style_bg_color(done_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *dn_lbl = lv_label_create(done_btn);
   lv_label_set_text(dn_lbl, LV_SYMBOL_OK "  Done");
-  lv_obj_set_style_text_font(dn_lbl, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(dn_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(dn_lbl);
   lv_obj_add_event_cb(done_btn, &EstepsCalibrationPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -283,7 +283,7 @@ EstepsCalibrationPanel::EstepsCalibrationPanel(KWebSocketClient &websocket_clien
   lv_obj_set_style_bg_color(discard_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *ds_lbl = lv_label_create(discard_btn);
   lv_label_set_text(ds_lbl, LV_SYMBOL_LEFT "  Discard, Keep Previous");
-  lv_obj_set_style_text_font(ds_lbl, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(ds_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(ds_lbl);
   lv_obj_add_event_cb(discard_btn, &EstepsCalibrationPanel::_handle_callback, LV_EVENT_CLICKED, this);
 

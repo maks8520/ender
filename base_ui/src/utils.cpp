@@ -104,7 +104,7 @@ namespace KUtils {
   }
 
   void style_dialog_title(lv_obj_t *title) {
-    lv_obj_set_style_text_font(title, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(title, &montserrat_cyr_14, 0);
     lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 0);
   }
 
