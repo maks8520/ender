@@ -473,9 +473,9 @@ void MainPanel::_handle_pause_click(lv_event_t *e) {
   MainPanel *panel = static_cast<MainPanel*>(lv_event_get_user_data(e));
   panel->ws.gcode_script("M300 S1000 P50");
   if (panel->current_state == "paused") {
-    panel->ws.gcode_script("_SMART_RESUME");
+    panel->ws.gcode_script("_RU_RESUME");
   } else {
-    panel->ws.gcode_script("_SMART_PAUSE");
+    panel->ws.gcode_script("_RU_PAUSE");
   }
 }
 
