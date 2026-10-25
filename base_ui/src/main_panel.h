@@ -18,6 +18,8 @@
 #include "setting_panel.h"
 #include "print_status_panel.h"
 #include "spoolman_panel.h"
+#include "finetune_panel.h"
+#include "zoffset_panel.h"
 #include "lvgl/lvgl.h"
 
 #include <mutex>
@@ -29,7 +31,7 @@ class MainPanel : public NotifyConsumer {
   MainPanel(KWebSocketClient &ws, std::mutex &lv_lock, SpoolmanPanel &sm);
   ~MainPanel();
 
-  void consume(json &data);
+  virtual void consume(json &data) override;
   void init(json &data);
   void subscribe();
   PrinterTunePanel& get_tune_panel();
@@ -39,7 +41,6 @@ class MainPanel : public NotifyConsumer {
   void create_panel();
   void create_main(lv_obj_t *parent);
 
-  // UI Telemetry Update Methods (Partial invalidation)
   void set_nozzle_temp(int current, int target);
   void set_bed_temp(int current, int target);
   void set_fan_speed(int speed_percent);
@@ -48,6 +49,7 @@ class MainPanel : public NotifyConsumer {
   void set_print_progress(int percent);
   void set_print_state(const std::string &state);
 
+  void show_console();
   lv_obj_t* get_main_container() { return main_cont; }
 
  private:
@@ -60,25 +62,28 @@ class MainPanel : public NotifyConsumer {
   HomingPanel homing_panel;
   FanPanel fan_panel;
   LedPanel led_panel;
-  lv_obj_t *tabview;
-  lv_obj_t *main_tab;
-  lv_obj_t *macros_tab;
-  MacrosPanel macros_panel;
-  lv_obj_t *console_tab;
-  ConsolePanel console_panel;
-  lv_obj_t *printertune_tab;
-  lv_obj_t *setting_tab;
-  SettingPanel setting_panel;
-  lv_obj_t *main_cont;
+  FineTunePanel finetune_panel;
+  ZOffsetPanel zoffset_panel;
   PrintStatusPanel print_status_panel;
   PrintPanel print_panel;
-  PrinterTunePanel printertune_panel;
   Numpad numpad;
   ExtruderPanel extruder_panel;
   PromptPanel prompt_panel;
   SpoolmanPanel &spoolman_panel;
 
-  // 3-Zone Refined Layout Objects
+  lv_obj_t *tabview;
+  lv_obj_t *main_tab;
+  lv_obj_t *macros_tab;
+  std::unique_ptr<MacrosPanel> macros_panel;
+  lv_obj_t *console_tab;
+  std::unique_ptr<ConsolePanel> console_panel;
+  lv_obj_t *printertune_tab;
+  std::unique_ptr<PrinterTunePanel> printertune_panel;
+  lv_obj_t *setting_tab;
+  std::unique_ptr<SettingPanel> setting_panel;
+  lv_obj_t *main_cont;
+
+  // 3-Zone Refined Layout Objects (480x272)
   lv_obj_t *left_zone;
   lv_obj_t *nozzle_label;
   lv_obj_t *bed_label;
@@ -90,6 +95,7 @@ class MainPanel : public NotifyConsumer {
   lv_obj_t *progress_bar;
   lv_obj_t *progress_percent_label;
   lv_obj_t *bedmesh_btn;
+  lv_obj_t *finetune_btn;
 
   lv_obj_t *right_zone;
   lv_obj_t *pause_btn;
@@ -108,6 +114,7 @@ class MainPanel : public NotifyConsumer {
   static void _handle_stop_click(lv_event_t *e);
   static void _handle_start_click(lv_event_t *e);
   static void _handle_bedmesh_click(lv_event_t *e);
+  static void _handle_finetune_click(lv_event_t *e);
   static void _handle_confirm_cancel(lv_event_t *e);
   static void _handle_dismiss_cancel(lv_event_t *e);
 };

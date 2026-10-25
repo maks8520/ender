@@ -98,7 +98,7 @@
 
 #if USE_SDL || USE_SDL_GPU
 #  define SDL_HOR_RES     480
-#  define SDL_VER_RES     320
+#  define SDL_VER_RES     272
 
 /* Scale window by this factor (useful when simulating small screens) */
 #  define SDL_ZOOM        1
@@ -587,7 +587,7 @@
 #if USE_SDL || USE_SDL_GPU
     #ifdef GUPPY_SMALL_SCREEN
       #  define SDL_HOR_RES     480
-      #  define SDL_VER_RES     320
+      #  define SDL_VER_RES     272
     #else
       #  define SDL_HOR_RES     800
       #  define SDL_VER_RES     480
