@@ -35,37 +35,12 @@ KWebSocketClient GuppyScreen::ws(NULL);
 std::mutex GuppyScreen::lv_lock;
 
 GuppyScreen::GuppyScreen()
-  : moonraker_client(ws, main_screen, lv_lock)
-  , camera_widget(main_screen, lv_lock)
-  , spoolman_panel(ws, lv_lock)
+  : spoolman_panel(ws, lv_lock)
   , main_panel(ws, lv_lock, spoolman_panel)
   , init_panel(main_panel, main_panel.get_tune_panel().get_bedmesh_panel(), filament_runout_panel, lv_lock)
   , notification_manager(ws, lv_lock)
   , filament_runout_panel(ws, lv_lock, [this]() { return main_panel.is_prompt_visible(); })
 {
-  main_screen_obj = lv_obj_create(NULL);
-  main_screen.create(main_screen_obj);
-  lv_scr_load(main_screen_obj);
-
-  Config *conf = Config::get_instance();
-  std::string cam_url = "http://127.0.0.1:8080/?action=stream";
-  int cam_fps = 12;
-  bool cam_enabled = true;
-
-  auto url_j = conf->get_json("/camera_url");
-  if (!url_j.is_null() && url_j.is_string()) cam_url = url_j.get<std::string>();
-
-  auto fps_j = conf->get_json("/camera_fps");
-  if (!fps_j.is_null() && fps_j.is_number_integer()) cam_fps = fps_j.get<int>();
-
-  auto en_j = conf->get_json("/camera_enabled");
-  if (!en_j.is_null() && en_j.is_boolean()) cam_enabled = en_j.get<bool>();
-
-  camera_widget.init(cam_url, cam_fps, cam_enabled);
-  camera_widget.start();
-
-  moonraker_client.init();
-
   main_panel.create_panel();
 }
 
@@ -122,9 +97,6 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
   spdlog::set_default_logger(klogger);
   klogger->flush_on(ll);
 
-  // Re-apply the WiFi low-latency preference on every startup/respawn - the
-  // driver resets to fast power-save (PM 2) on reboot/reconnect, so persisting
-  // the choice here keeps `wl PM 0` in effect. No-op when `wl` is absent.
   if (!conf->get_json("/wifi_low_latency").empty()
       && conf->get<bool>("/wifi_low_latency")) {
     KUtils::set_wifi_low_latency(true);
@@ -138,12 +110,6 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
   /*LittlevGL init*/
   lv_init();
 
-  // Boot-race guard for WiFi low-latency: the immediate apply above can be
-  // overridden a moment later when wlan0 associates (the driver resets PM=2),
-  // and that connect event is missed because the wpa monitor isn't attached
-  // yet. Re-assert PM 0 a few times over the first ~minute so it lands once
-  // association has settled; each fire re-checks config so a mid-window
-  // toggle-off is respected. The live reconnect hook handles everything after.
   if (!conf->get_json("/wifi_low_latency").empty()
       && conf->get<bool>("/wifi_low_latency")) {
     lv_timer_t *wifi_ll_timer = lv_timer_create([](lv_timer_t *) {
@@ -152,7 +118,7 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
         KUtils::set_wifi_low_latency(true);
       }
     }, 12000, NULL);
-    lv_timer_set_repeat_count(wifi_ll_timer, 5);  // ~12,24,...60s, then auto-deletes
+    lv_timer_set_repeat_count(wifi_ll_timer, 5);
   }
 
 #if !defined(SIMULATOR) && !defined(OS_ANDROID)
@@ -168,17 +134,9 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
   lv_style_init(&style_container);
   lv_style_set_border_width(&style_container, 0);
   lv_style_set_radius(&style_container, 0);
-  /* Force m10 on all lv_obj instances on small screens. Theme cascade alone
-   * doesn't reach plain lv_label children of lv_btn etc.; setting text_font
-   * on style_container (applied to every obj via theme_apply_cb) propagates
-   * via LV_STYLE_PROP_INHERIT to descendant labels too. */
   if (lv_disp_get_physical_hor_res(NULL) <= 480) {
     lv_style_set_text_font(&style_container, &lv_font_montserrat_10);
   }
-
-//  lv_style_init(&style_imgbtn_default);
-//  lv_style_set_img_recolor_opa(&style_imgbtn_default, LV_OPA_100);
-//  lv_style_set_img_recolor(&style_imgbtn_default, lv_color_black());
 
   lv_style_init(&style_imgbtn_pressed);
   lv_style_set_img_recolor_opa(&style_imgbtn_pressed, LV_OPA_100);
@@ -188,32 +146,24 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
   lv_style_set_img_recolor_opa(&style_imgbtn_disabled, LV_OPA_100);
   lv_style_set_img_recolor(&style_imgbtn_disabled, lv_palette_darken(LV_PALETTE_GREY, 1));
 
-  /*Initia1ize the new theme from the current theme*/
-
   lv_theme_t *th_act = lv_disp_get_theme(NULL);
   th_new = *th_act;
 
-  /*Set the parent theme and the style apply callback for the new theme*/
   lv_theme_set_parent(&th_new, th_act);
   lv_theme_set_apply_cb(&th_new, &GuppyScreen::new_theme_apply_cb);
 
-  /*Assign the new theme to the current display*/
   lv_disp_set_theme(NULL, &th_new);
 
   ws.register_notify_update(State::get_instance());
-  ws.register_notify_update(&moonraker_client);
 
   GuppyScreen *gs = GuppyScreen::get();
   auto printers = conf->get_json("/printers");
   if (!printers.empty()) {
-    // start initializing all guppy components
     std::string ws_url = fmt::format("ws://{}:{}/websocket",
                                      conf->get<std::string>(conf->df() + "moonraker_host"),
                                      conf->get<uint32_t>(conf->df() + "moonraker_port"));
 
 #ifdef SIMULATOR
-    /* Don't actually connect in simulator mode - the failing connect's
-     * disconnected callback re-shows the init overlay over the mock data. */
     spdlog::info("simulator mode - skipping printer websocket connection to {}", ws_url);
 #else
     spdlog::info("connecting to printer at {}", ws_url);
@@ -245,7 +195,6 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
         lv_obj_add_event_cb(touch_calibrate_scr, &GuppyScreen::handle_calibrated, LV_EVENT_READY, main_screen);
         spdlog::info("running touch calibration");
       } else {
-        // load calibration data
         auto c = calibration_coeff.template get<std::vector<float>>();
         lv_tc_coeff_t coeff = {true, c[0], c[1], c[2], c[3], c[4], c[5]};
         lv_tc_set_coeff(coeff, false);
@@ -256,8 +205,6 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
 #endif // OS_ANDROID
 
 #ifdef SIMULATOR
-  /* No Moonraker in simulator mode - hide the init overlay and fabricate
-   * sensor data so the home panel renders something visible. */
   gs->init_panel.sim_hide();
   gs->main_panel.sim_setup_mock_data();
 #endif
@@ -266,21 +213,16 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
 }
 
 void GuppyScreen::loop() {
-  /*Handle LitlevGL tasks (tickless mode)*/
 #if !defined(SIMULATOR) && !defined(OS_ANDROID)
   std::atomic_bool is_sleeping(false);
   int saved_brightness = -1;
   Config *conf = Config::get_instance();
 
-  // Apply the user's configured brightness on startup. Fall back to whatever
-  // the device already has if no value is stored.
   auto stored_b = conf->get_json("/display_brightness");
   if (!stored_b.is_null()) {
     KUtils::backlight_set(stored_b.template get<int>());
   }
 
-  // Cache sleep config; re-read only periodically so the hot loop doesn't
-  // do a JSON lookup every tick.
   int32_t display_sleep = conf->get<int32_t>("/display_sleep_sec") * 1000;
   uint32_t sleep_cfg_refresh_ms = 0;
 #endif
@@ -299,12 +241,6 @@ void GuppyScreen::loop() {
       if (lv_disp_get_inactive_time(NULL) > display_sleep) {
         if (!is_sleeping.load()) {
           spdlog::debug("putting display to sleeping");
-          // fbdev_blank() uses FB_BLANK_POWERDOWN which the Ingenic X2000
-          // kernel 4.4.94 DSI driver cannot recover from via FB_BLANK_UNBLANK
-          // (backlight returns but video stays white). Instead: kill the
-          // backlight via /sys/class/backlight, which is a separate code
-          // path from DSI panel power-down, and overlay the LVGL screen_saver
-          // so the panel is black if the user wakes mid-DSI-refresh.
           saved_brightness = KUtils::backlight_get();
           KUtils::backlight_set(0);
           lv_obj_move_foreground(screen_saver);
@@ -336,14 +272,8 @@ std::mutex &GuppyScreen::get_lock() {
 void GuppyScreen::connect_ws(const std::string &url) {
   init_panel.set_message(LV_SYMBOL_WARNING " Waiting for printer to initialize...");
   ws.connect(url.c_str(),
-   [this]() {
-     init_panel.connected(ws);
-     moonraker_client.on_connected();
-   },
-   [this]() {
-     init_panel.disconnected(ws);
-     moonraker_client.on_disconnected();
-   });
+   [this]() { init_panel.connected(ws); },
+   [this]() { init_panel.disconnected(ws); });
 }
 
 void GuppyScreen::new_theme_apply_cb(lv_theme_t *th, lv_obj_t *obj) {
@@ -354,7 +284,6 @@ void GuppyScreen::new_theme_apply_cb(lv_theme_t *th, lv_obj_t *obj) {
   }
 
   if (lv_obj_check_type(obj, &lv_imgbtn_class)) {
-//    lv_obj_add_style(obj, &style_imgbtn_default, LV_STATE_DEFAULT);
     lv_obj_add_style(obj, &style_imgbtn_pressed, LV_STATE_PRESSED);
     lv_obj_add_style(obj, &style_imgbtn_disabled, LV_STATE_DISABLED);
   }
@@ -390,13 +319,11 @@ void GuppyScreen::refresh_theme() {
   lv_style_set_img_recolor(&style_imgbtn_pressed, primary_color);
 }
 
-/*Set in lv_conf.h as `LV_TICK_CUSTOM_SYS_TIME_EXPR`*/
 uint32_t custom_tick_get(void) {
   static auto start = std::chrono::steady_clock::now();
   auto now = std::chrono::steady_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
 
-  // Detect and log overflow
   if (duration > std::numeric_limits<uint32_t>::max()) {
     spdlog::warn("Custom tick duration exceeds uint32_t max value.");
   }

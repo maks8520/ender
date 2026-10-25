@@ -154,8 +154,39 @@ void NotificationManager::process(json &st) {
 
 // ---- toast rendering ----
 
-void NotificationManager::push(const std::string &text, Severity sev) {
-  // coalesce: identical text already shown -> refresh its timer, don't stack
+void NotificationManager::push(const std::string &raw_text, Severity sev) {
+  std::string text = raw_text;
+
+  // Localize raw Klipper error codes to friendly Russian error descriptions
+  if (raw_text.find("ADC out of range") != std::string::npos) {
+    text = "⚠️ Ошибка датчика температуры! Проверьте термистор сопла или стола.";
+  } else if (raw_text.find("Heater extruder not heating") != std::string::npos) {
+    text = "⚠️ Ошибка нагрева сопла! Проверьте нагреватель и провода.";
+  } else if (raw_text.find("Heater heater_bed not heating") != std::string::npos) {
+    text = "⚠️ Ошибка нагрева стола! Проверьте контакты и провода стола.";
+  } else if (raw_text.find("Timer too close") != std::string::npos) {
+    text = "⚠️ Сбой синхронизации Klipper (высокая нагрузка ЦП).";
+  } else if (raw_text.find("MCU 'mcu' shutdown") != std::string::npos) {
+    text = "⚠️ Аварийная остановка платы управления (MCU).";
+  } else if (raw_text.find("Must home axis first") != std::string::npos) {
+    text = "⚠️ Необходим поиск нулевых точек осей (Homing).";
+  }
+
+  // Severe Klipper shutdown error modal
+  if (sev == ERROR) {
+    static const char *err_btns[] = {"Перезагрузить Klipper", "Закрыть", ""};
+    lv_obj_t *mbox = lv_msgbox_create(NULL, "⚠️ Ошибка Klipper", text.c_str(), err_btns, false);
+    lv_obj_add_event_cb(mbox, [](lv_event_t *ev) {
+      lv_obj_t *obj = lv_obj_get_parent(lv_event_get_target(ev));
+      auto *self = static_cast<NotificationManager *>(lv_event_get_user_data(ev));
+      if (lv_msgbox_get_active_btn(obj) == 0) {
+        self->ws.send_jsonrpc("printer.firmware_restart");
+      }
+      lv_msgbox_close(obj);
+    }, LV_EVENT_VALUE_CHANGED, this);
+    return;
+  }
+
   for (auto &t : toasts) {
     if (t.text == text) {
       if (t.timer != NULL) {

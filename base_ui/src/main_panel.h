@@ -26,88 +26,36 @@
 
 class MainPanel : public NotifyConsumer {
  public:
-  MainPanel(KWebSocketClient &ws,
-	    std::mutex &lv_lock,
-	    SpoolmanPanel &sm);
-
+  MainPanel(KWebSocketClient &ws, std::mutex &lv_lock, SpoolmanPanel &sm);
   ~MainPanel();
+
   void consume(json &data);
   void init(json &data);
   void subscribe();
   PrinterTunePanel& get_tune_panel();
   void enable_spoolman();
   bool is_prompt_visible() const { return prompt_panel.is_visible(); }
-  
+
   void create_panel();
-  void create_sensors(json &temp_sensors);
-  void create_fans(json &temp_fans);
-  void create_leds(json &leds);
-#ifdef SIMULATOR
-  /* Populate sensors directly from config and start a periodic timer that
-   * pushes mock temperature values, so the home panel is visible without
-   * a live Moonraker connection. */
-  void sim_setup_mock_data();
-#endif
-  void handle_homing_cb(lv_event_t *event);
-  void handle_extrude_cb(lv_event_t *event);
-  void handle_fanpanel_cb(lv_event_t *event);
-  void handle_ledpanel_cb(lv_event_t *event);
-  void handle_print_cb(lv_event_t *event);
+  void create_main(lv_obj_t *parent);
 
-  lv_obj_t *create_button(lv_obj_t *parent,
-			  const void *btn_img,
-			  const char* text,
-			  lv_event_cb_t cb);
+  // UI Telemetry Update Methods (Partial invalidation)
+  void set_nozzle_temp(int current, int target);
+  void set_bed_temp(int current, int target);
+  void set_fan_speed(int speed_percent);
+  void set_time_remaining(const std::string &time_str);
+  void set_layer_info(int current_layer, int total_layers);
+  void set_print_progress(int percent);
+  void set_print_state(const std::string &state);
 
-  lv_obj_t *create_heater_info(lv_obj_t *parent,
-			       const void *heater_img,
-			       const char* text,
-			       lv_color_t color);
-  
-  static void _handle_homing_cb(lv_event_t *event) {
-    MainPanel *panel = (MainPanel*)event->user_data;
-    panel->handle_homing_cb(event);
-  };
-
-  static void _handle_extrude_cb(lv_event_t *event) {
-    MainPanel *panel = (MainPanel*)event->user_data;
-    panel->handle_extrude_cb(event);
-  };
-
-  static void _handle_fanpanel_cb(lv_event_t *event) {
-    MainPanel *panel = (MainPanel*)event->user_data;
-    panel->handle_fanpanel_cb(event);
-  };
-
-  static void _handle_ledpanel_cb(lv_event_t *event) {
-    MainPanel *panel = (MainPanel*)event->user_data;
-    panel->handle_ledpanel_cb(event);
-  };
-
-  static void _handle_print_cb(lv_event_t *event) {
-    MainPanel *panel = (MainPanel*)event->user_data;
-    panel->handle_print_cb(event);
-  };
-
-  void handle_tab_changed(lv_event_t *event);
-  static void _handle_tab_changed(lv_event_t *event) {
-    MainPanel *panel = (MainPanel*)event->user_data;
-    panel->handle_tab_changed(event);
-  };
-
-  // re-tapping the already-active tab button (no value change) — used so the
-  // Console tab always drops back to its terminal even when already selected
-  void handle_tab_btn_clicked(lv_event_t *event);
-  static void _handle_tab_btn_clicked(lv_event_t *event) {
-    MainPanel *panel = (MainPanel*)event->user_data;
-    panel->handle_tab_btn_clicked(event);
-  };
-
-  // jump to the console terminal (e.g. after running a macro from the Macros tab)
-  void show_console();
+  lv_obj_t* get_main_container() { return main_cont; }
 
  private:
-  void create_main(lv_obj_t *parent);
+  void build_left_zone(lv_obj_t *parent);
+  void build_center_zone(lv_obj_t *parent);
+  void build_right_zone(lv_obj_t *parent);
+  void create_cancel_confirm_modal();
+
   KWebSocketClient &ws;
   HomingPanel homing_panel;
   FanPanel fan_panel;
@@ -129,18 +77,39 @@ class MainPanel : public NotifyConsumer {
   ExtruderPanel extruder_panel;
   PromptPanel prompt_panel;
   SpoolmanPanel &spoolman_panel;
-  
-  lv_style_t style;
 
-  lv_obj_t *temp_cont;
-  lv_obj_t *temp_chart;
+  // 3-Zone Refined Layout Objects
+  lv_obj_t *left_zone;
+  lv_obj_t *nozzle_label;
+  lv_obj_t *bed_label;
+  lv_obj_t *fan_label;
 
-  std::map<std::string, std::shared_ptr<SensorContainer>> sensors;
-  
-  ButtonContainer homing_btn;
-  ButtonContainer extrude_btn;
-  ButtonContainer action_btn;
-  ButtonContainer led_btn;
-  ButtonContainer print_btn;
+  lv_obj_t *center_zone;
+  lv_obj_t *time_rem_label;
+  lv_obj_t *layer_label;
+  lv_obj_t *progress_bar;
+  lv_obj_t *progress_percent_label;
+  lv_obj_t *bedmesh_btn;
+
+  lv_obj_t *right_zone;
+  lv_obj_t *pause_btn;
+  lv_obj_t *stop_btn;
+  lv_obj_t *start_btn;
+
+  lv_obj_t *confirm_modal;
+
+  int cur_nozzle = 0, tgt_nozzle = 0;
+  int cur_bed = 0, tgt_bed = 0;
+  int cur_fan = 0;
+  int cur_progress = 0;
+  std::string current_state = "idle";
+
+  static void _handle_pause_click(lv_event_t *e);
+  static void _handle_stop_click(lv_event_t *e);
+  static void _handle_start_click(lv_event_t *e);
+  static void _handle_bedmesh_click(lv_event_t *e);
+  static void _handle_confirm_cancel(lv_event_t *e);
+  static void _handle_dismiss_cancel(lv_event_t *e);
 };
+
 #endif // __MAIN_PANEL_H__
