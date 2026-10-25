@@ -17,8 +17,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
           fetch-depth: 0
+
+      - name: Initialize Git Submodules in base_ui
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          cd base_ui
+          git submodule update --init --recursive
 
       - name: Build MIPS Executable
         run: |

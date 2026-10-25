@@ -177,12 +177,12 @@ void NotificationManager::push(const std::string &raw_text, Severity sev) {
     static const char *err_btns[] = {"Перезагрузить Klipper", "Закрыть", ""};
     lv_obj_t *mbox = lv_msgbox_create(NULL, "⚠️ Ошибка Klipper", text.c_str(), err_btns, false);
     lv_obj_add_event_cb(mbox, [](lv_event_t *ev) {
-      lv_obj_t *obj = lv_obj_get_parent(lv_event_get_target(ev));
+      lv_obj_t *mbox_obj = lv_event_get_current_target(ev);
       auto *self = static_cast<NotificationManager *>(lv_event_get_user_data(ev));
-      if (lv_msgbox_get_active_btn(obj) == 0) {
+      if (lv_msgbox_get_active_btn(mbox_obj) == 0) {
         self->ws.send_jsonrpc("printer.firmware_restart");
       }
-      lv_msgbox_close(obj);
+      lv_msgbox_close(mbox_obj);
     }, LV_EVENT_VALUE_CHANGED, this);
     return;
   }
