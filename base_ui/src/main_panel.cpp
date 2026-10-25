@@ -15,7 +15,7 @@ MainPanel::MainPanel(KWebSocketClient &ws, std::mutex &lv_lock, SpoolmanPanel &s
       print_status_panel(ws, lv_lock, NULL),
       print_panel(ws, lv_lock, print_status_panel, sm),
       extruder_panel(ws, lv_lock, numpad, sm),
-      prompt_panel(ws, lv_lock),
+      prompt_panel(ws, lv_lock, lv_layer_top()),
       spoolman_panel(sm),
       tabview(NULL),
       left_zone(NULL),

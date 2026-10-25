@@ -8,16 +8,16 @@
 
 ## Кросс-компиляция через официальный Docker-образ
 
-Для гарантированной воспроизводимости бинарника используется официальный Docker-образ из репозитория: `ghcr.io/coreflake1/guppydev:latest`.
+Для гарантированной воспроизводимости бинарника используется официальный Docker-образ: `ghcr.io/coreflake1/guppydev:latest`.
 
-### Команда сборки:
+### Команды сборки:
 
 ```bash
-docker run --rm -it -v "$PWD/base_ui":/work -w /work ghcr.io/coreflake1/guppydev:latest bash scripts/build-mips.sh
+docker run --rm -it -v "$PWD/base_ui":/work -w /work ghcr.io/coreflake1/guppydev:latest bash -c "mkdir -p build && cd build && cmake .. && make -j\$(nproc)"
 ```
 
 После выполнения сборки готовый исполняемый файл будет располагаться по пути:
-`base_ui/build/bin/guppyscreen`
+`base_ui/build/guppyscreen`
 
 ---
 
@@ -25,7 +25,7 @@ docker run --rm -it -v "$PWD/base_ui":/work -w /work ghcr.io/coreflake1/guppydev
 
 1. Скопируйте файл на принтер по SSH:
    ```bash
-   scp base_ui/build/bin/guppyscreen root@<IP_ПРИНТЕРА>:/usr/data/guppyscreen/guppyscreen
+   scp base_ui/build/guppyscreen root@<IP_ПРИНТЕРА>:/usr/data/guppyscreen/guppyscreen
    ```
 2. Сделайте файл исполняемым и перезапустите службу:
    ```bash
