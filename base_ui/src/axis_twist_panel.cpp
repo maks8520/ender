@@ -56,7 +56,7 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
 
   lv_obj_t *title = lv_label_create(intro_cont);
   lv_label_set_text(title, "Axis Twist Compensation");
-  lv_obj_set_style_text_font(title, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(title, &montserrat_cyr_20, 0);
 
   lv_obj_t *intro_body = lv_label_create(intro_cont);
   lv_label_set_long_mode(intro_body, LV_LABEL_LONG_WRAP);
@@ -66,14 +66,14 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
     "You'll probe 5 points across X. At each one, lower the nozzle until a "
     "sheet of paper just drags, then Accept. Nozzle must be clean; no heating "
     "needed. Homing and clearing the mesh happen automatically.");
-  lv_obj_set_style_text_font(intro_body, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(intro_body, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(intro_body, LV_TEXT_ALIGN_CENTER, 0);
 
   start_btn = lv_btn_create(intro_cont);
   lv_obj_set_size(start_btn, 220, 46);
   lv_obj_t *sb_lbl = lv_label_create(start_btn);
   lv_label_set_text(sb_lbl, LV_SYMBOL_OK "  Start Calibration");
-  lv_obj_set_style_text_font(sb_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(sb_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(sb_lbl);
   lv_obj_add_event_cb(start_btn, &AxisTwistPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -102,17 +102,17 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
 
   point_label = lv_label_create(hdr);
   lv_label_set_text(point_label, "Point 1 of 5");
-  lv_obj_set_style_text_font(point_label, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(point_label, &montserrat_cyr_16, 0);
 
   z_label = lv_label_create(hdr);
   lv_label_set_text(z_label, "Z -");
-  lv_obj_set_style_text_font(z_label, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(z_label, &montserrat_cyr_20, 0);
 
   instr_label = lv_label_create(probe_cont);
   lv_label_set_long_mode(instr_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(instr_label, LV_PCT(100));
   lv_label_set_text(instr_label, "Lower until a sheet of paper just drags, then Accept.");
-  lv_obj_set_style_text_font(instr_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(instr_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(instr_label, LV_TEXT_ALIGN_CENTER, 0);
 
   // two jog rows of 4 buttons (down steps, then up steps)
@@ -132,7 +132,7 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
       lv_obj_set_style_bg_color(b, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
       lv_obj_t *lbl = lv_label_create(b);
       lv_label_set_text(lbl, JOG_LABELS[i]);
-      lv_obj_set_style_text_font(lbl, &lv_font_montserrat_16, 0);
+      lv_obj_set_style_text_font(lbl, &montserrat_cyr_16, 0);
       lv_obj_center(lbl);
       lv_obj_add_event_cb(b, &AxisTwistPanel::_handle_callback, LV_EVENT_CLICKED, this);
       jogs[i] = { JOG_LABELS[i], b };
@@ -157,7 +157,7 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
   lv_obj_set_style_bg_color(abort_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *ab_lbl = lv_label_create(abort_btn);
   lv_label_set_text(ab_lbl, LV_SYMBOL_CLOSE "  Abort");
-  lv_obj_set_style_text_font(ab_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(ab_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(ab_lbl);
   lv_obj_add_event_cb(abort_btn, &AxisTwistPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -166,7 +166,7 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
   lv_obj_set_height(accept_btn, 44);
   lv_obj_t *ac_lbl = lv_label_create(accept_btn);
   lv_label_set_text(ac_lbl, LV_SYMBOL_OK "  Accept");
-  lv_obj_set_style_text_font(ac_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(ac_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(ac_lbl);
   lv_obj_add_event_cb(accept_btn, &AxisTwistPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -178,7 +178,7 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
 
   lv_obj_t *done_title = lv_label_create(done_cont);
   lv_label_set_text(done_title, LV_SYMBOL_OK "  Calibration complete");
-  lv_obj_set_style_text_font(done_title, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(done_title, &montserrat_cyr_20, 0);
   lv_obj_set_style_text_color(done_title, lv_palette_main(LV_PALETTE_GREEN), 0);
 
   done_offsets_label = lv_label_create(done_cont);
@@ -186,14 +186,14 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
   lv_obj_set_width(done_offsets_label, LV_PCT(94));
   lv_label_set_text(done_offsets_label,
     "Review the offsets, then Save to write them to printer.cfg.");
-  lv_obj_set_style_text_font(done_offsets_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(done_offsets_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(done_offsets_label, LV_TEXT_ALIGN_CENTER, 0);
 
   save_btn = lv_btn_create(done_cont);
   lv_obj_set_size(save_btn, 240, 46);
   lv_obj_t *sv_lbl = lv_label_create(save_btn);
   lv_label_set_text(sv_lbl, LV_SYMBOL_SAVE "  Save & Restart");
-  lv_obj_set_style_text_font(sv_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(sv_lbl, &montserrat_cyr_16, 0);
   lv_obj_center(sv_lbl);
   lv_obj_add_event_cb(save_btn, &AxisTwistPanel::_handle_callback, LV_EVENT_CLICKED, this);
 
@@ -215,7 +215,7 @@ AxisTwistPanel::AxisTwistPanel(KWebSocketClient &websocket_client, std::mutex &l
     "Add an [axis_twist_compensation] section to\n"
     "printer.cfg and restart Klipper.");
   lv_obj_set_style_text_align(empty_lbl, LV_TEXT_ALIGN_CENTER, 0);
-  lv_obj_set_style_text_font(empty_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(empty_lbl, &montserrat_cyr_16, 0);
   empty_back_btn = lv_btn_create(empty_cont);
   lv_obj_set_size(empty_back_btn, 140, 40);
   lv_obj_t *eb_lbl = lv_label_create(empty_back_btn);

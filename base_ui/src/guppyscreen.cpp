@@ -135,7 +135,7 @@ GuppyScreen *GuppyScreen::init(std::function<void(lv_color_t, lv_color_t)> hal_i
   lv_style_set_border_width(&style_container, 0);
   lv_style_set_radius(&style_container, 0);
   if (lv_disp_get_physical_hor_res(NULL) <= 480) {
-    lv_style_set_text_font(&style_container, &lv_font_montserrat_10);
+    lv_style_set_text_font(&style_container, &montserrat_cyr_14);
   }
 
   lv_style_init(&style_imgbtn_pressed);

@@ -111,9 +111,9 @@ BedMeshPanel::BedMeshPanel(KWebSocketClient &c, std::mutex &l)
 
   auto screen_width = lv_disp_get_physical_hor_res(NULL);
   if (screen_width < 800) {
-    lv_obj_set_style_text_font(mesh_table, &lv_font_montserrat_8, LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(mesh_table, &montserrat_cyr_14, LV_STATE_DEFAULT);
   } else {
-    lv_obj_set_style_text_font(mesh_table, &lv_font_montserrat_10, LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(mesh_table, &montserrat_cyr_14, LV_STATE_DEFAULT);
   }
 
   // mesh table
@@ -422,7 +422,7 @@ void BedMeshPanel::refresh_views(json &bm) {
         bool small_screen_large_mesh = (table_screen_width < 800) && is_large_mesh;
         bool use_small_font = (mesh.size() > 9 || mesh[0].size() > 9 || small_screen_large_mesh);
         lv_obj_set_style_text_font(mesh_table,
-          use_small_font ? &lv_font_montserrat_8 : &lv_font_montserrat_10, LV_STATE_DEFAULT);
+          use_small_font ? &montserrat_cyr_14 : &montserrat_cyr_14, LV_STATE_DEFAULT);
         // Approx line height (glyph + leading), slightly over-estimated so rows never
         // exceed their slice.
         int glyph_h = use_small_font ? 12 : 16;
@@ -858,7 +858,7 @@ void BedMeshPanel::draw_axes_and_labels(const std::vector<std::vector<BedMeshPan
   lv_draw_label_dsc_t label_dsc;
   lv_draw_label_dsc_init(&label_dsc);
   label_dsc.color = lv_color_white();
-  label_dsc.font = &lv_font_montserrat_10;
+  label_dsc.font = &montserrat_cyr_14;
 
 
   // Draw Z-axis (vertical) - connect to X/Y axes origin with centered Z range
@@ -950,12 +950,12 @@ void BedMeshPanel::draw_axes_and_labels(const std::vector<std::vector<BedMeshPan
     lv_draw_label_dsc_t z_label_dsc;
     lv_draw_label_dsc_init(&z_label_dsc);
     z_label_dsc.color = lv_color_white();
-    z_label_dsc.font = &lv_font_montserrat_10;
+    z_label_dsc.font = &montserrat_cyr_14;
 
     lv_draw_label_dsc_t z_axis_label_dsc;
     lv_draw_label_dsc_init(&z_axis_label_dsc);
     z_axis_label_dsc.color = lv_color_white();
-    z_axis_label_dsc.font = &lv_font_montserrat_10;
+    z_axis_label_dsc.font = &montserrat_cyr_14;
 
     double left_x = (0 - cols / 2.0) * MESH_SCALE;
     double front_y = ((rows-1) - rows / 2.0) * MESH_SCALE;
@@ -986,7 +986,7 @@ void BedMeshPanel::draw_axes_and_labels(const std::vector<std::vector<BedMeshPan
   lv_draw_label_dsc_t small_label_dsc;
   lv_draw_label_dsc_init(&small_label_dsc);
   small_label_dsc.color = lv_color_white();
-  small_label_dsc.font = &lv_font_montserrat_10;
+  small_label_dsc.font = &montserrat_cyr_14;
 
   // Left-justified mesh info
   lv_area_t mesh_info_area;
@@ -998,7 +998,7 @@ void BedMeshPanel::draw_axes_and_labels(const std::vector<std::vector<BedMeshPan
   lv_draw_label_dsc_t right_label_dsc;
   lv_draw_label_dsc_init(&right_label_dsc);
   right_label_dsc.color = lv_color_white();
-  right_label_dsc.font = &lv_font_montserrat_10;
+  right_label_dsc.font = &montserrat_cyr_14;
 
 #ifndef CROSS_COMPILE
   // Debug info for simulation mode: show current viewing angles at top
@@ -1010,7 +1010,7 @@ void BedMeshPanel::draw_axes_and_labels(const std::vector<std::vector<BedMeshPan
   lv_draw_label_dsc_t debug_label_dsc;
   lv_draw_label_dsc_init(&debug_label_dsc);
   debug_label_dsc.color = lv_color_make(255, 255, 0); // Yellow for visibility
-  debug_label_dsc.font = &lv_font_montserrat_10;
+  debug_label_dsc.font = &montserrat_cyr_14;
 
   lv_area_t debug_area;
   if (create_and_check_label_area(debug_area, 10, 10, 200, LABEL_HEIGHT, canvas_width, canvas_height)) {
@@ -1881,7 +1881,7 @@ void BedMeshPanel::draw_horizontal_axes(double mesh_origin_x, double mesh_origin
   lv_draw_label_dsc_t label_dsc;
   lv_draw_label_dsc_init(&label_dsc);
   label_dsc.color = lv_color_white();
-  label_dsc.font = &lv_font_montserrat_10;
+  label_dsc.font = &montserrat_cyr_14;
 
   double front_y = ((rows-1) - rows / 2.0) * MESH_SCALE;
 
@@ -1892,7 +1892,7 @@ void BedMeshPanel::draw_horizontal_axes(double mesh_origin_x, double mesh_origin
   lv_draw_label_dsc_t axis_label_dsc;
   lv_draw_label_dsc_init(&axis_label_dsc);
   axis_label_dsc.color = lv_color_white();
-  axis_label_dsc.font = &lv_font_montserrat_10;
+  axis_label_dsc.font = &montserrat_cyr_14;
 
   double middle_x_coord = ((cols/2) - cols / 2.0) * MESH_SCALE;
   draw_axis_label("X", middle_x_coord, front_y + TICK_MARK_LENGTH * 6, grid_reference_z, -10, 0, canvas_width, canvas_height, axis_label_dsc);
@@ -1958,7 +1958,7 @@ void BedMeshPanel::draw_color_gradient_band(int canvas_width, int canvas_height,
   lv_draw_label_dsc_init(&label_dsc);
   label_dsc.color = lv_color_white();
   label_dsc.opa = LV_OPA_COVER;
-  label_dsc.font = &lv_font_montserrat_10;
+  label_dsc.font = &montserrat_cyr_14;
 
   // Max value label at the top (showing extended color scale max)
   char max_label[16];

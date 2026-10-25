@@ -137,7 +137,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
   lv_obj_set_size(cmds_btn, BAR_BTN_W, BAR_H);
   lv_obj_set_style_bg_color(cmds_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *cmds_lbl = lv_label_create(cmds_btn);
-  lv_obj_set_style_text_font(cmds_lbl, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(cmds_lbl, &montserrat_cyr_20, 0);
   lv_label_set_text(cmds_lbl, LV_SYMBOL_LIST);
   lv_obj_center(cmds_lbl);
   lv_obj_add_event_cb(cmds_btn, &ConsolePanel::_handle_open_commands, LV_EVENT_CLICKED, this);
@@ -146,7 +146,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
   // input grows to fill; set height AFTER set_one_line (which forces content height)
   lv_obj_set_flex_grow(input, 1);
   lv_textarea_set_one_line(input, true);
-  lv_obj_set_style_text_font(input, &lv_font_montserrat_16, LV_PART_MAIN);  // scale text to the taller field (20 overflowed with long commands)
+  lv_obj_set_style_text_font(input, &montserrat_cyr_16, LV_PART_MAIN);  // scale text to the taller field (20 overflowed with long commands)
   lv_obj_set_height(input, BAR_H);
   lv_textarea_set_placeholder_text(input, "type gcode...");
   lv_obj_add_event_cb(input, &ConsolePanel::_handle_input_kb, LV_EVENT_ALL, this);
@@ -155,7 +155,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
   lv_obj_set_size(clear_btn, BAR_BTN_W, BAR_H);
   lv_obj_set_style_bg_color(clear_btn, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
   lv_obj_t *clear_lbl = lv_label_create(clear_btn);
-  lv_obj_set_style_text_font(clear_lbl, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(clear_lbl, &montserrat_cyr_20, 0);
   lv_label_set_text(clear_lbl, LV_SYMBOL_CLOSE);
   lv_obj_center(clear_lbl);
   lv_obj_add_event_cb(clear_btn, &ConsolePanel::_handle_clear, LV_EVENT_CLICKED, this);
@@ -163,7 +163,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
   lv_obj_t *send_btn = lv_btn_create(input_bar);
   lv_obj_set_size(send_btn, BAR_BTN_W, BAR_H);
   lv_obj_t *send_lbl = lv_label_create(send_btn);
-  lv_obj_set_style_text_font(send_lbl, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(send_lbl, &montserrat_cyr_20, 0);
   lv_label_set_text(send_lbl, LV_SYMBOL_NEW_LINE);
   lv_obj_center(send_lbl);
   lv_obj_add_event_cb(send_btn, &ConsolePanel::_handle_send, LV_EVENT_CLICKED, this);
@@ -194,13 +194,13 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
   lv_obj_set_style_pad_hor(back_btn, 14, LV_PART_MAIN);
   lv_obj_t *back_lbl = lv_label_create(back_btn);
   lv_label_set_text(back_lbl, LV_SYMBOL_LEFT "  Back");
-  lv_obj_set_style_text_font(back_lbl, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(back_lbl, &montserrat_cyr_14, 0);
   lv_obj_center(back_lbl);
   lv_obj_add_event_cb(back_btn, &ConsolePanel::_handle_back, LV_EVENT_CLICKED, this);
 
   lv_obj_set_flex_grow(title_label, 1);
   lv_label_set_long_mode(title_label, LV_LABEL_LONG_DOT);
-  lv_obj_set_style_text_font(title_label, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(title_label, &montserrat_cyr_16, 0);
   lv_label_set_text(title_label, "");
 
   // ---- body: (category list | command list) + nav column ----
@@ -239,7 +239,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
   lv_obj_add_flag(empty_label, LV_OBJ_FLAG_IGNORE_LAYOUT);
   lv_obj_set_width(empty_label, LV_PCT(90));
   lv_obj_set_style_text_align(empty_label, LV_TEXT_ALIGN_CENTER, 0);
-  lv_obj_set_style_text_font(empty_label, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(empty_label, &montserrat_cyr_16, 0);
   lv_obj_center(empty_label);
   lv_obj_add_flag(empty_label, LV_OBJ_FLAG_HIDDEN);
 
@@ -266,7 +266,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
   style_nav(ok_btn);
   lv_obj_t *ok_lbl = lv_label_create(ok_btn);
   lv_label_set_text(ok_lbl, LV_SYMBOL_OK);
-  lv_obj_set_style_text_font(ok_lbl, &lv_font_montserrat_20, LV_PART_MAIN);
+  lv_obj_set_style_text_font(ok_lbl, &montserrat_cyr_20, LV_PART_MAIN);
   lv_obj_center(ok_lbl);
   lv_obj_add_event_cb(ok_btn, &ConsolePanel::_handle_nav, LV_EVENT_CLICKED, this);
 
@@ -278,7 +278,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
 
   // footer (only shown when the list is truncated)
   lv_obj_set_width(footer_label, LV_PCT(100));
-  lv_obj_set_style_text_font(footer_label, &lv_font_montserrat_10, 0);
+  lv_obj_set_style_text_font(footer_label, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(footer_label, LV_TEXT_ALIGN_CENTER, 0);
   lv_obj_set_style_text_color(footer_label, lv_palette_main(LV_PALETTE_GREY), 0);
   lv_obj_add_flag(footer_label, LV_OBJ_FLAG_HIDDEN);
@@ -292,7 +292,7 @@ ConsolePanel::ConsolePanel(KWebSocketClient &websocket_client, std::mutex &lock,
 
   // shared keyboard
   lv_obj_add_flag(kb, LV_OBJ_FLAG_HIDDEN);
-  lv_obj_set_style_text_font(kb, &lv_font_montserrat_10, LV_STATE_DEFAULT);
+  lv_obj_set_style_text_font(kb, &montserrat_cyr_14, LV_STATE_DEFAULT);
 
   // pool of reusable command rows
   for (int i = 0; i < POOL_SIZE; i++) {

@@ -72,17 +72,17 @@ PrintPanel::PrintPanel(KWebSocketClient &websocket, std::mutex &lock, PrintStatu
    * its own default style. Forcing the font here matches the rest of the UI. */
   label = lv_label_create(refresh_btn);
   lv_label_set_text(label, LV_SYMBOL_REFRESH " Reload");
-  lv_obj_set_style_text_font(label, &lv_font_montserrat_10, 0);
+  lv_obj_set_style_text_font(label, &montserrat_cyr_14, 0);
   lv_obj_center(label);
 
   label = lv_label_create(modified_sort_btn);
   lv_label_set_text(label, LV_SYMBOL_LIST " Modified");
-  lv_obj_set_style_text_font(label, &lv_font_montserrat_10, 0);
+  lv_obj_set_style_text_font(label, &montserrat_cyr_14, 0);
   lv_obj_center(label);
 
   label = lv_label_create(az_sort_btn);
   lv_label_set_text(label, LV_SYMBOL_LIST " A-Z");
-  lv_obj_set_style_text_font(label, &lv_font_montserrat_10, 0);
+  lv_obj_set_style_text_font(label, &montserrat_cyr_14, 0);
   lv_obj_center(label);
 
   lv_obj_add_event_cb(refresh_btn, &PrintPanel::_handle_btns, LV_EVENT_CLICKED, this);
@@ -164,7 +164,7 @@ PrintPanel::PrintPanel(KWebSocketClient &websocket, std::mutex &lock, PrintStatu
 
   lv_label_set_long_mode(filament_name_label, LV_LABEL_LONG_DOT);
   lv_obj_set_style_max_width(filament_name_label, 280, 0);
-  lv_obj_set_style_text_font(filament_name_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(filament_name_label, &montserrat_cyr_14, 0);
   lv_label_set_text(filament_name_label, "");
 
   lv_obj_set_style_text_align(filament_detail_label, LV_TEXT_ALIGN_CENTER, 0);

@@ -84,13 +84,13 @@ void make_octet_row(lv_obj_t *parent, const char *label_text, lv_obj_t *out[4]) 
   lv_obj_t *lbl = lv_label_create(row);
   lv_label_set_text(lbl, label_text);
   lv_obj_set_width(lbl, 60);
-  lv_obj_set_style_text_font(lbl, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(lbl, &montserrat_cyr_14, 0);
 
   for (int i = 0; i < 4; i++) {
     if (i > 0) {
       lv_obj_t *dot = lv_label_create(row);
       lv_label_set_text(dot, ".");
-      lv_obj_set_style_text_font(dot, &lv_font_montserrat_12, 0);
+      lv_obj_set_style_text_font(dot, &montserrat_cyr_14, 0);
     }
     lv_obj_t *ta = lv_textarea_create(row);
     lv_textarea_set_one_line(ta, true);
@@ -103,7 +103,7 @@ void make_octet_row(lv_obj_t *parent, const char *label_text, lv_obj_t *out[4]) 
     // random misalignment between boxes (confirmed live 2026-07-12). Fixing
     // the font to match the box instead of regrowing the box, which would
     // reopen the panel-level scrollbar this height was chosen to avoid.
-    lv_obj_set_style_text_font(ta, &lv_font_montserrat_10, 0);
+    lv_obj_set_style_text_font(ta, &montserrat_cyr_14, 0);
     lv_obj_set_style_text_align(ta, LV_TEXT_ALIGN_CENTER, 0);
     out[i] = ta;
   }
@@ -183,7 +183,7 @@ StaticIpPanel::StaticIpPanel(std::mutex &l)
   lv_obj_set_style_pad_row(cont, 4, 0);
 
   lv_label_set_text(title_label, "Static IP");
-  lv_obj_set_style_text_font(title_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(title_label, &montserrat_cyr_14, 0);
 
   lv_obj_set_size(mode_cont, LV_PCT(100), LV_SIZE_CONTENT);
   lv_obj_clear_flag(mode_cont, LV_OBJ_FLAG_SCROLLABLE);
@@ -223,7 +223,7 @@ StaticIpPanel::StaticIpPanel(std::mutex &l)
     lv_obj_t *l = lv_label_create(revert_btn);
     lv_label_set_text(l, "Revert to DHCP");
     lv_obj_set_style_text_color(l, lv_palette_main(LV_PALETTE_ORANGE), 0);
-    lv_obj_set_style_text_font(l, &lv_font_montserrat_12, 0);
+    lv_obj_set_style_text_font(l, &montserrat_cyr_14, 0);
     lv_obj_center(l);
   }
   lv_obj_add_event_cb(revert_btn, &StaticIpPanel::_handle_revert_btn, LV_EVENT_CLICKED, this);
@@ -273,7 +273,7 @@ StaticIpPanel::StaticIpPanel(std::mutex &l)
   lv_label_set_long_mode(status_label, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(status_label, LV_PCT(100));
   lv_label_set_text(status_label, "");
-  lv_obj_set_style_text_font(status_label, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(status_label, &montserrat_cyr_14, 0);
 
   lv_obj_set_size(save_btn, 140, 36);
   {

@@ -17,11 +17,11 @@ lv_obj_t *make_info_row(lv_obj_t *parent, const char *label_text, lv_obj_t **val
 
   lv_obj_t *lbl = lv_label_create(row);
   lv_label_set_text(lbl, label_text);
-  lv_obj_set_style_text_font(lbl, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(lbl, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_color(lbl, lv_palette_lighten(LV_PALETTE_GREY, 1), 0);
 
   lv_obj_t *val = lv_label_create(row);
-  lv_obj_set_style_text_font(val, &lv_font_montserrat_12, 0);
+  lv_obj_set_style_text_font(val, &montserrat_cyr_14, 0);
   *val_out = val;
   return row;
 }
@@ -50,7 +50,7 @@ NetworkDetailPanel::NetworkDetailPanel(std::mutex &l,
   lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_COLUMN);
   lv_obj_set_style_pad_row(cont, 8, 0);
 
-  lv_obj_set_style_text_font(title_label, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(title_label, &montserrat_cyr_16, 0);
 
   lv_obj_set_size(info_card, LV_PCT(100), LV_SIZE_CONTENT);
   lv_obj_clear_flag(info_card, LV_OBJ_FLAG_SCROLLABLE);

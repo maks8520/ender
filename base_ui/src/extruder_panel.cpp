@@ -276,7 +276,7 @@ void ExtruderPanel::build_filament_dialog() {
 
   lv_label_set_long_mode(fil_name_label, LV_LABEL_LONG_DOT);
   lv_obj_set_style_max_width(fil_name_label, 280, 0);
-  lv_obj_set_style_text_font(fil_name_label, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(fil_name_label, &montserrat_cyr_14, 0);
   lv_label_set_text(fil_name_label, "");
 
   lv_obj_set_style_text_align(fil_detail_label, LV_TEXT_ALIGN_CENTER, 0);

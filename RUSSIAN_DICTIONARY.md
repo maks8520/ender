@@ -1,0 +1,34 @@
+# Словарь переводов для OpenKE
+
+## Основные термины
+- Print → Печать
+- Pause → Пауза
+- Stop → Стоп
+- Resume → Продолжить
+- Cancel → Отмена
+- Temperature → Температура
+- Nozzle → Сопло
+- Bed → Стол
+- Fan → Вентилятор
+- Speed → Скорость
+- Flow → Поток
+- Home → Домой
+- Move → Движение
+- Extrude → Экструдировать
+- Retract → Втянуть
+- File → Файл
+- Settings → Настройки
+- Calibration → Калибровка
+- Mesh → Сетка
+- Layer → Слой
+- Time → Время
+- Remaining → Осталось
+- Progress → Прогресс
+- Error → Ошибка
+- Warning → Предупреждение
+- Close → Закрыть
+- Confirm → Подтвердить
+- Restart → Перезагрузить
+- Update → Обновить
+- Install → Установить
+- Uninstall → Удалить

@@ -56,7 +56,7 @@ PromptPanel::PromptPanel(KWebSocketClient &websocket_client,
   // actually reads as a title - previously both were the same size, no
   // visual hierarchy at all between "what this is" and "what it says".
   lv_label_set_long_mode(header, LV_LABEL_LONG_SCROLL_CIRCULAR);
-  lv_obj_set_style_text_font(header, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(header, &montserrat_cyr_20, 0);
   lv_obj_set_style_text_align(header, LV_TEXT_ALIGN_CENTER, 0);
   lv_obj_set_style_pad_all(header, 0, 0);
   lv_obj_set_style_pad_bottom(header, 8, 0);

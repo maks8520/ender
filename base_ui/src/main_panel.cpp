@@ -114,38 +114,38 @@ void MainPanel::build_left_zone(lv_obj_t *parent) {
 
   // Nozzle Temperature
   lv_obj_t *nozzle_title = lv_label_create(left_zone);
-  lv_label_set_text(nozzle_title, "🔥 Сопло");
+  lv_label_set_text(nozzle_title, LV_SYMBOL_CHARGE " Сопло");
   lv_obj_set_style_text_color(nozzle_title, lv_color_hex(0xAAAAAA), LV_PART_MAIN);
   lv_obj_set_pos(nozzle_title, 4, 4);
 
   nozzle_label = lv_label_create(left_zone);
   lv_label_set_text(nozzle_label, "0° / 0°");
   lv_obj_set_style_text_color(nozzle_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-  lv_obj_set_style_font(nozzle_label, &lv_font_montserrat_18, LV_PART_MAIN);
+  lv_obj_set_style_font(nozzle_label, &montserrat_cyr_18, LV_PART_MAIN);
   lv_obj_set_pos(nozzle_label, 4, 24);
 
   // Bed Temperature
   lv_obj_t *bed_title = lv_label_create(left_zone);
-  lv_label_set_text(bed_title, "🛏 Стол");
+  lv_label_set_text(bed_title, LV_SYMBOL_HOME " Стол");
   lv_obj_set_style_text_color(bed_title, lv_color_hex(0xAAAAAA), LV_PART_MAIN);
   lv_obj_set_pos(bed_title, 4, 76);
 
   bed_label = lv_label_create(left_zone);
   lv_label_set_text(bed_label, "0° / 0°");
   lv_obj_set_style_text_color(bed_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-  lv_obj_set_style_font(bed_label, &lv_font_montserrat_18, LV_PART_MAIN);
+  lv_obj_set_style_font(bed_label, &montserrat_cyr_18, LV_PART_MAIN);
   lv_obj_set_pos(bed_label, 4, 96);
 
   // Part Fan Speed
   lv_obj_t *fan_title = lv_label_create(left_zone);
-  lv_label_set_text(fan_title, "❄ Обдув");
+  lv_label_set_text(fan_title, LV_SYMBOL_CHARGE " Обдув");
   lv_obj_set_style_text_color(fan_title, lv_color_hex(0xAAAAAA), LV_PART_MAIN);
   lv_obj_set_pos(fan_title, 4, 148);
 
   fan_label = lv_label_create(left_zone);
   lv_label_set_text(fan_label, "0%");
   lv_obj_set_style_text_color(fan_label, lv_color_hex(0x00A8FF), LV_PART_MAIN);
-  lv_obj_set_style_font(fan_label, &lv_font_montserrat_18, LV_PART_MAIN);
+  lv_obj_set_style_font(fan_label, &montserrat_cyr_18, LV_PART_MAIN);
   lv_obj_set_pos(fan_label, 4, 168);
 }
 
@@ -169,7 +169,7 @@ void MainPanel::build_center_zone(lv_obj_t *parent) {
   time_rem_label = lv_label_create(center_zone);
   lv_label_set_text(time_rem_label, "00:00:00");
   lv_obj_set_style_text_color(time_rem_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-  lv_obj_set_style_font(time_rem_label, &lv_font_montserrat_20, LV_PART_MAIN);
+  lv_obj_set_style_font(time_rem_label, &montserrat_cyr_20, LV_PART_MAIN);
   lv_obj_set_pos(time_rem_label, 4, 22);
 
   // Layer status
@@ -201,7 +201,7 @@ void MainPanel::build_center_zone(lv_obj_t *parent) {
   lv_obj_add_event_cb(bedmesh_btn, _handle_bedmesh_click, LV_EVENT_CLICKED, this);
 
   lv_obj_t *bm_lbl = lv_label_create(bedmesh_btn);
-  lv_label_set_text(bm_lbl, "📊 Сетка стола");
+  lv_label_set_text(bm_lbl, LV_SYMBOL_LIST " Сетка стола");
   lv_obj_set_style_text_color(bm_lbl, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
   lv_obj_center(bm_lbl);
 
@@ -214,7 +214,7 @@ void MainPanel::build_center_zone(lv_obj_t *parent) {
   lv_obj_add_event_cb(finetune_btn, _handle_finetune_click, LV_EVENT_CLICKED, this);
 
   lv_obj_t *ft_lbl = lv_label_create(finetune_btn);
-  lv_label_set_text(ft_lbl, "⚙️ Настройка");
+  lv_label_set_text(ft_lbl, LV_SYMBOL_SETTINGS " Настройка");
   lv_obj_set_style_text_color(ft_lbl, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
   lv_obj_center(ft_lbl);
 }
@@ -238,7 +238,7 @@ void MainPanel::build_right_zone(lv_obj_t *parent) {
   lv_obj_add_event_cb(start_btn, _handle_start_click, LV_EVENT_CLICKED, this);
 
   lv_obj_t *start_lbl = lv_label_create(start_btn);
-  lv_label_set_text(start_lbl, "▶\nПЕЧАТЬ");
+  lv_label_set_text(start_lbl, LV_SYMBOL_PLAY "\nПЕЧАТЬ");
   lv_obj_set_style_text_align(start_lbl, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
   lv_obj_set_style_text_color(start_lbl, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
   lv_obj_center(start_lbl);
@@ -252,7 +252,7 @@ void MainPanel::build_right_zone(lv_obj_t *parent) {
   lv_obj_add_event_cb(pause_btn, _handle_pause_click, LV_EVENT_CLICKED, this);
 
   lv_obj_t *pause_lbl = lv_label_create(pause_btn);
-  lv_label_set_text(pause_lbl, "⏸\nПАУЗА");
+  lv_label_set_text(pause_lbl, LV_SYMBOL_PAUSE "\nПАУЗА");
   lv_obj_set_style_text_align(pause_lbl, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
   lv_obj_set_style_text_color(pause_lbl, lv_color_hex(0x000000), LV_PART_MAIN);
   lv_obj_center(pause_lbl);
@@ -266,7 +266,7 @@ void MainPanel::build_right_zone(lv_obj_t *parent) {
   lv_obj_add_event_cb(stop_btn, _handle_stop_click, LV_EVENT_CLICKED, this);
 
   lv_obj_t *stop_lbl = lv_label_create(stop_btn);
-  lv_label_set_text(stop_lbl, "⏹\nСТОП");
+  lv_label_set_text(stop_lbl, LV_SYMBOL_STOP "\nСТОП");
   lv_obj_set_style_text_align(stop_lbl, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
   lv_obj_set_style_text_color(stop_lbl, lv_color_hex(0xFFFFFF), LV_PART_MAIN);
   lv_obj_center(stop_lbl);

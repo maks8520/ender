@@ -49,7 +49,7 @@ SensorContainer::SensorContainer(KWebSocketClient &c,
   lv_obj_set_style_pad_all(sensor_cont, 0, 0);
 
   /* Smaller, screen-aware font - on 480x272 the previous theme-default m12 felt oversized. */
-  const lv_font_t *row_font = (width_scale < 0.8) ? &lv_font_montserrat_10 : &lv_font_montserrat_14;
+  const lv_font_t *row_font = (width_scale < 0.8) ? &montserrat_cyr_14 : &montserrat_cyr_14;
 
   lv_img_set_src(sensor_img, img);
   lv_obj_align(sensor_img, LV_ALIGN_LEFT_MID, 0, 0);

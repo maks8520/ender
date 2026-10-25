@@ -33,7 +33,7 @@ SkewCorrectionPanel::SkewCorrectionPanel(KWebSocketClient &websocket_client)
 
   lv_obj_t *title = lv_label_create(panel_cont);
   lv_label_set_text(title, "Skew Correction");
-  lv_obj_set_style_text_font(title, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(title, &montserrat_cyr_20, 0);
 
   lv_obj_t *body = lv_label_create(panel_cont);
   lv_label_set_long_mode(body, LV_LABEL_LONG_WRAP);
@@ -41,7 +41,7 @@ SkewCorrectionPanel::SkewCorrectionPanel(KWebSocketClient &websocket_client)
   lv_label_set_text(body,
     "Print a skew calibration object, measure the three lengths (mm) with "
     "calipers, and enter them. A-C and B-D are the diagonals; A-D the edge.");
-  lv_obj_set_style_text_font(body, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(body, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_align(body, LV_TEXT_ALIGN_CENTER, 0);
 
   for (int i = 0; i < 3; i++) {
@@ -56,7 +56,7 @@ SkewCorrectionPanel::SkewCorrectionPanel(KWebSocketClient &websocket_client)
 
     lv_obj_t *lbl = lv_label_create(row);
     lv_label_set_text(lbl, FIELD_LABELS[i]);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl, &montserrat_cyr_16, 0);
 
     ta[i] = lv_textarea_create(row);
     lv_textarea_set_one_line(ta[i], true);

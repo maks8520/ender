@@ -26,7 +26,7 @@ ZOffsetPanel::ZOffsetPanel(KWebSocketClient &websocket_client, std::mutex &l)
 
   // big live readout
   lv_label_set_text(value_label, "0.000 mm");
-  lv_obj_set_style_text_font(value_label, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(value_label, &montserrat_cyr_20, 0);
 
   // raise / lower buttons: full-width, clear physical direction
   auto style_dir_btn = [](lv_obj_t *b, const char *txt) {
@@ -35,7 +35,7 @@ ZOffsetPanel::ZOffsetPanel(KWebSocketClient &websocket_client, std::mutex &l)
     lv_obj_set_style_bg_color(b, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
     lv_obj_t *lbl = lv_label_create(b);
     lv_label_set_text(lbl, txt);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_16, 0);
+    lv_obj_set_style_text_font(lbl, &montserrat_cyr_16, 0);
     lv_obj_center(lbl);
   };
   style_dir_btn(up_btn, LV_SYMBOL_UP "  Raise  (farther from bed)");
@@ -48,7 +48,7 @@ ZOffsetPanel::ZOffsetPanel(KWebSocketClient &websocket_client, std::mutex &l)
   // the Helper Script's Save Z-Offset macros persist every adjustment to
   // variables.cfg automatically, so there is no Save button - just say so.
   lv_label_set_text(auto_save_hint, LV_SYMBOL_OK "  Adjustments are saved automatically");
-  lv_obj_set_style_text_font(auto_save_hint, &lv_font_montserrat_14, 0);
+  lv_obj_set_style_text_font(auto_save_hint, &montserrat_cyr_14, 0);
   lv_obj_set_style_text_color(auto_save_hint, lv_palette_lighten(LV_PALETTE_GREY, 1), 0);
 
   // bottom row: Reset | Back

@@ -99,7 +99,7 @@ FirmwareRetractionPanel::FirmwareRetractionPanel(KWebSocketClient &websocket_cli
     "Add a [firmware_retraction] section to\n"
     "printer.cfg and restart Klipper.");
   lv_obj_set_style_text_align(empty_lbl, LV_TEXT_ALIGN_CENTER, 0);
-  lv_obj_set_style_text_font(empty_lbl, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(empty_lbl, &montserrat_cyr_16, 0);
   lv_obj_set_height(empty_back_btn, 40);
   lv_obj_set_width(empty_back_btn, 140);
   lv_obj_t *eb_lbl = lv_label_create(empty_back_btn);
@@ -137,13 +137,13 @@ void FirmwareRetractionPanel::build_row(Field &f) {
   lv_obj_t *name = lv_label_create(row);
   lv_label_set_text(name, f.name);
   lv_obj_set_flex_grow(name, 1);
-  lv_obj_set_style_text_font(name, &lv_font_montserrat_16, 0);
+  lv_obj_set_style_text_font(name, &montserrat_cyr_16, 0);
   lv_obj_set_style_text_color(name, lv_palette_lighten(LV_PALETTE_GREY, 2), 0);
 
   f.value = lv_label_create(row);
   lv_label_set_text(f.value, "-");
   lv_obj_set_width(f.value, 110);
-  lv_obj_set_style_text_font(f.value, &lv_font_montserrat_20, 0);
+  lv_obj_set_style_text_font(f.value, &montserrat_cyr_20, 0);
   lv_obj_set_style_text_align(f.value, LV_TEXT_ALIGN_RIGHT, 0);
 
   // - / + buttons
@@ -153,7 +153,7 @@ void FirmwareRetractionPanel::build_row(Field &f) {
     lv_obj_set_style_bg_color(b, lv_palette_darken(LV_PALETTE_GREY, 2), LV_PART_MAIN);
     lv_obj_t *lbl = lv_label_create(b);
     lv_label_set_text(lbl, sym);
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
+    lv_obj_set_style_text_font(lbl, &montserrat_cyr_20, 0);
     lv_obj_center(lbl);
     lv_obj_add_event_cb(b, &FirmwareRetractionPanel::_handle_callback, LV_EVENT_CLICKED, this);
     return b;
