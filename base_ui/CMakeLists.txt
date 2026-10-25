@@ -10,6 +10,13 @@ file(GLOB_RECURSE GUPPY_SOURCES
     "lvgl/src/*.c"
     "lv_drivers/*.c"
     "lv_touch_calibration/*.c"
+    "libhv/c/*.c"
+    "libhv/cpp/*.cpp"
+    "libhv/base/*.c"
+    "libhv/event/*.c"
+    "libhv/http/*.c"
+    "libhv/http/client/*.cpp"
+    "libhv/http/server/*.cpp"
 )
 
 add_executable(guppyscreen ${GUPPY_SOURCES})
@@ -21,6 +28,7 @@ target_include_directories(guppyscreen PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/lv_touch_calibration
     ${CMAKE_CURRENT_SOURCE_DIR}/spdlog/include
     ${CMAKE_CURRENT_SOURCE_DIR}/libhv/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/libhv/include/hv
     ${CMAKE_CURRENT_SOURCE_DIR}/wpa_supplicant/src/common
 )
 

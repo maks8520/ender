@@ -213,8 +213,9 @@ PrintStatusPanel::~PrintStatusPanel() {
 }
 
 void PrintStatusPanel::foreground() {
-  // populate();
-  lv_obj_move_foreground(status_cont);
+  if (status_cont) {
+    lv_obj_move_background(status_cont);
+  }
 }
 
 void PrintStatusPanel::background() {

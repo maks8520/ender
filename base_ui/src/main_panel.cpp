@@ -420,14 +420,14 @@ void MainPanel::consume(json &data) {
 
   if (st.contains("extruder")) {
     auto &ext = st["extruder"];
-    int cur = ext.contains("temperature") && ext["temperature"].is_number() ? ext["temperature"].get<int>() : cur_nozzle;
-    int tgt = ext.contains("target") && ext["target"].is_number() ? ext["target"].get<int>() : tgt_nozzle;
+    int cur = ext.contains("temperature") && ext["temperature"].is_number() ? static_cast<int>(ext["temperature"].get<double>()) : cur_nozzle;
+    int tgt = ext.contains("target") && ext["target"].is_number() ? static_cast<int>(ext["target"].get<double>()) : tgt_nozzle;
     set_nozzle_temp(cur, tgt);
   }
   if (st.contains("heater_bed")) {
     auto &bed = st["heater_bed"];
-    int cur = bed.contains("temperature") && bed["temperature"].is_number() ? bed["temperature"].get<int>() : cur_bed;
-    int tgt = bed.contains("target") && bed["target"].is_number() ? bed["target"].get<int>() : tgt_bed;
+    int cur = bed.contains("temperature") && bed["temperature"].is_number() ? static_cast<int>(bed["temperature"].get<double>()) : cur_bed;
+    int tgt = bed.contains("target") && bed["target"].is_number() ? static_cast<int>(bed["target"].get<double>()) : tgt_bed;
     set_bed_temp(cur, tgt);
   }
   if (st.contains("fan0")) {
