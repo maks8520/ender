@@ -656,11 +656,11 @@ void PrintStatusPanel::handle_callback(lv_event_t *event) {
   } else if (btn == emergency_btn.get_container()) {
     ws.send_jsonrpc("printer.emergency_stop");
   } else if (btn == pause_btn.get_container()) {
-    ws.send_jsonrpc("printer.print.pause");
+    ws.gcode_script("_SMART_PAUSE");
     pause_btn.disable();
 
   } else if (btn == resume_btn.get_container()) {
-    ws.send_jsonrpc("printer.print.resume");
+    ws.gcode_script("_SMART_RESUME");
     resume_btn.disable();
   } else if (btn == cancel_btn.get_container()) {
     auto s = State::get_instance();
@@ -692,8 +692,8 @@ void PrintStatusPanel::handle_callback(lv_event_t *event) {
       delay = "\n\nStartup in progress — cancel is queued\n"
               "and will run when startup finishes.";
 
-    static const char *cancel_dlg_btns[] = {"Cancel Print", "Back", ""};
-    std::string cancel_msg = fmt::format("Cancel the print?{}", delay);
+    static const char *cancel_dlg_btns[] = {"Да, отменить", "Вернуться", ""};
+    std::string cancel_msg = "Отменить текущую печать?";
     lv_obj_t *mbox = lv_msgbox_create(NULL, NULL, cancel_msg.c_str(), cancel_dlg_btns, false);
     lv_obj_add_event_cb(mbox, [](lv_event_t *ev) {
       lv_obj_t *obj = lv_obj_get_parent(lv_event_get_target(ev));

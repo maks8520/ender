@@ -109,6 +109,13 @@ if [ -d "$BASE_UI_DIR/scripts" ]; then
     cp -r "$BASE_UI_DIR/scripts" "$APP_DIR/" 2>/dev/null || true
 fi
 
+# Install Smart Macros for Klipper
+if [ -f "$BASE_UI_DIR/scripts/smart_macros.cfg" ]; then
+    mkdir -p /usr/data/printer_data/config/GuppyScreen
+    cp "$BASE_UI_DIR/scripts/smart_macros.cfg" /usr/data/printer_data/config/GuppyScreen/smart_macros.cfg
+    printf "${green}Installed smart_macros.cfg to /usr/data/printer_data/config/GuppyScreen/${white}\n"
+fi
+
 # Create default guppyconfig.json if not present
 if [ ! -f "$APP_DIR/guppyconfig.json" ]; then
     cat > "$APP_DIR/guppyconfig.json" << 'EOF'

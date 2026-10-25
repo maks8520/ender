@@ -15,9 +15,6 @@
 #include "notification_manager.h"
 #include "filament_runout_panel.h"
 #include "websocket_client.h"
-#include "main_screen.h"
-#include "moonraker_client.h"
-#include "camera_widget.h"
 
 class GuppyScreen {
  private:
@@ -32,11 +29,6 @@ class GuppyScreen {
 #endif
   static std::mutex lv_lock;
   static KWebSocketClient ws;
-
-  lv_obj_t *main_screen_obj = nullptr;
-  MainScreen main_screen;
-  MoonrakerClient moonraker_client;
-  CameraWidget camera_widget;
 
   SpoolmanPanel spoolman_panel;
   MainPanel main_panel;
