@@ -657,11 +657,11 @@ void PrintStatusPanel::handle_callback(lv_event_t *event) {
   } else if (btn == emergency_btn.get_container()) {
     ws.send_jsonrpc("printer.emergency_stop");
   } else if (btn == pause_btn.get_container()) {
-    ws.gcode_script("_SMART_PAUSE");
+    ws.gcode_script("_RU_PAUSE");
     pause_btn.disable();
 
   } else if (btn == resume_btn.get_container()) {
-    ws.gcode_script("_SMART_RESUME");
+    ws.gcode_script("_RU_RESUME");
     resume_btn.disable();
   } else if (btn == cancel_btn.get_container()) {
     auto s = State::get_instance();
